@@ -1,3 +1,15 @@
+{%extends "base.html"%} {% load static %} {% load bootstrap4 %} {% block content %}
+
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+</head>
+
+
+
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,16 +35,29 @@
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Welcome {{ user.username }}</a>
-      </li>
-      <li class="nav-item">
-      <a href="{%url 'login' %}">Login</a>
-      </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+    <!--      Authentication-->
+    {% if user.is_authenticated and user.is_superuser %}
+        <a style="color:;" class="nav-link" href="#">logged In {{user.username}}</a>
+        <a style="color:;" class="nav-link" href="/logout">Logout</a>
+      {% elif user.is_authenticated %}
+        <a style="color:;" class="nav-link" href="#">logged In {{user.username}}</a>
+      <a style="color:;" class="nav-link" href="/logout">Logout</a>
+
+      {% else %}
+      <li class="nav-item">
+        <a style="color:;" class="nav-link" href="/login">Hello Guest Login</a>
+      </li>
+      <li class="nav-item">
+        <a style="color:;" class="nav-link" href="{%url 'register'%}"> Sign Up</a>
+      </li>
+
+        {% endif %}
   </div>
 </nav>
+
+{% endblock %}

@@ -1,21 +1,44 @@
-{%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}}
-
+{%extends "base.html"%} {% load static %} {% load bootstrap4 %} {% block content %}   {%include 'navbar.html'%}
 {% load socialaccount %}
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Google Registration</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
-
 <body>
-    <h1>My Google Login Project</h1>
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
+    <div class="container">
+      <div class="row">
+        <!-- Empty div -->
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          {% if form.errors %}
+            <p> Password or Username is incorrect </p>
+          {% endif %}
+          <div class="panel panel-default">
 
-    {% else %}
-    <h1>My Google Login Project</h1>
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-    {% endif %}
+            <div class="panel-heading">
+              <h3 class="text-center">Login</h3>
+            </div>
+            <div class="panel-body">
+
+            <form method="post">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              <button type="submit" class="btn btn-primary">Sign up</button>
+            </form>
+                <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
+                    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+
+            </div>
+
+          </div>
+
+        </div>
+        <!-- empty div -->
+        <div class="col-md-4"></div>
+      </div>
+    </div>
 
 </body>
 

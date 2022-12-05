@@ -5,8 +5,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url("login", views.login, name="login"),
-
+    url("login", views.login_request, name="login"),
+    url("register", views.register_request, name="register"),
+    url("logout", views.logout_request, name="logout"),
 ]
 
 if settings.DEBUG:
