@@ -34,15 +34,18 @@ def login_request(request):
 
 
 def register_request(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = NewUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
             login(request, user)
-            messages.success(request, "Registration successful." )
-            return redirect("/login")
-        messages.error(request, "Unsuccessful registration. Invalid information.")
-    form = NewUserForm()
+            return redirect('/')
+    else:
+        form = NewUserForm()
+
     return render(request, 'registration/register.html', {'form': form})
 
 
