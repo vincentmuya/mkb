@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import NewUserForm
+from .forms import NewUserForm, NewPropertyForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
+from django.http import JsonResponse, HttpResponseRedirect
+
 
 # Create your views here.
 
@@ -55,3 +57,18 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("/")
+
+
+@login_required(login_url='/accounts/login')
+def new_property(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewPropertyForm(request.POST, request.FILES)
+        if form.is_valid():
+            building = form.save(commit=False)
+            building.seller = current_user
+            building.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = NewPropertyForm()
+    return render(request, 'new_property.html', {"form": form})

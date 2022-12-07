@@ -8,6 +8,7 @@ urlpatterns = [
     url("login", views.login_request, name="login"),
     url("register", views.register_request, name="register"),
     url("logout", views.logout_request, name="logout"),
+    url("new/product", views.new_property, name="new_property"),
 ]
 
 if settings.DEBUG:

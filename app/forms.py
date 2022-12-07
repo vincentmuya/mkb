@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Property, User, Profile
 
 
 class NewUserForm(UserCreationForm):
@@ -16,3 +17,13 @@ class NewUserForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class NewPropertyForm(forms.ModelForm):
+
+    class Meta:
+        model = Property
+        exclude = ['owner', "slug"]
+        widgets = {
+        }
+
