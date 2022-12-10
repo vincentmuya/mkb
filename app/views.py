@@ -66,7 +66,7 @@ def new_property(request):
         form = NewPropertyForm(request.POST, request.FILES)
         if form.is_valid():
             building = form.save(commit=False)
-            building.seller = current_user
+            building.owner = current_user
             building.save()
             return HttpResponseRedirect('/')
     else:
