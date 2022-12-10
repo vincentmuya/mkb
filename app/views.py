@@ -1,19 +1,20 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import NewUserForm, NewPropertyForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse, HttpResponseRedirect
-
+from .models import Property
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 
 def index(request):
+    buildings = Property.objects.all()
 
-    return render(request, "index.html")
+    return render(request, "index.html", {'buildings': buildings})
 
 
 def login_request(request):
@@ -72,3 +73,9 @@ def new_property(request):
     else:
         form = NewPropertyForm()
     return render(request, 'new_property.html', {"form": form})
+
+
+def property_detail(request, id, slug):
+    prop_det = get_object_or_404(Property, id=id, slug=slug)
+
+    return render(request, 'property_detail.html', {"prop_det": prop_det})

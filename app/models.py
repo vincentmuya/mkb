@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from slugify import slugify, SLUG_OK
 from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse
+from django.core.validators import validate_comma_separated_integer_list
 
 
 # Create your models here.
@@ -105,7 +106,7 @@ class Property(models.Model):
     tenant_unit = models.IntegerField(null=True, blank=True)
     available_units = models.IntegerField(null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
-    images = models.FileField()
+    images = models.ImageField(upload_to="posts/", blank=True, null=True)
 
     def __str__(self):
         return self.title
