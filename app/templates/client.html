@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'css/client.css' %}">
 </head>
-<body>
+<body style="padding-top:90px;">
 
     <div class="container">
 <h1>Client List</h1>
@@ -28,12 +28,12 @@
           <!-- Looping through cargo   -->
           {%  for client in client %}
           <tr>
-              <td><a href="{{ client.get_absolute_url }}">{{client.name}}</a></td>
+            <td><a href="{{ client.get_absolute_url }}">{{client.name}}</a></td>
             <td>{{client.phone_number}}</td>
             <td>{{client.id_number}}</td>
             <td>{{client.Residence}}</td>
             <td>{{client.loan_balance}}</td>
-            <td><a href="{% url 'update-client' client.pk %}"><button type="button" name="button">Edit</button></a></td>
+            <td><a href="{% url 'update-client' client.pk %}"><button type="button" class="btn btn-success" name="button">Update</button></a></td>
           </tr>
           {%endfor%}
         </table>
