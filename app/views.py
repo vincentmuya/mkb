@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import NewClientForm
 from django.http import HttpResponseRedirect
+from .models import Client
 
 # Create your views here.
 
@@ -27,6 +28,22 @@ def new_client(request):
     return render(request, 'new_client.html', {'form': form})
 
 
+@login_required(login_url='/accounts/login')
+def client_list(request):
+    client = Client.objects.all()
+    return render(request, 'client.html', {"client": client})
+
+
+@login_required(login_url='/accounts/login')
+def update_client(request, pk):
+    instance = get_object_or_404(Client, pk=pk)
+    form = NewClientForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/')
+    return render(request, 'update_client.html', {'form': form})
+
+
 def login_request(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -41,7 +58,7 @@ def login_request(request):
             else:
                 messages.error(request, "Invalid username or password.")
         else:
-            messages.error(request,"Invalid username or password.")
+            messages.error(request, "Invalid username or password.")
     form = AuthenticationForm()
 
     return render(request, 'registration/login.html', {'form': form})

@@ -1,0 +1,45 @@
+{%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}}
+<!DOCTYPE html>
+<html lang="en">
+<title>MKB Mic Bank</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/client.css' %}">
+</head>
+<body>
+
+    <div class="container">
+<h1>Client List</h1>
+
+          <div class="row">
+    <div class="col-md-1">
+    </div>
+  <div class="col-md-11">
+  <table id="clients">
+  <tr>
+  <th>Name</th>
+  <th>Phone Number</th>
+  <th>ID Number</th>
+  <th>Residence</th>
+  <th>Loan Amount</th>
+  </tr>
+          <!-- Looping through cargo   -->
+          {%  for client_list in client %}
+          <tr>
+            <td>{{client_list.name}}</td>
+            <td>{{client_list.phone_number}}</td>
+            <td>{{client_list.id_number}}</td>
+            <td>{{client_list.Residence}}</td>
+            <td>{{client_list.loan_balance}}</td>
+            <td><a href="{% url 'update-client' client_list.pk %}"><button type="button" name="button">Edit</button></a></td>
+          </tr>
+          {%endfor%}
+        </table>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
+{%endblock%}
