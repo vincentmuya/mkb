@@ -26,14 +26,14 @@
   <th>Loan Amount</th>
   </tr>
           <!-- Looping through cargo   -->
-          {%  for client_list in client %}
+          {%  for client in client %}
           <tr>
-            <td>{{client_list.name}}</td>
-            <td>{{client_list.phone_number}}</td>
-            <td>{{client_list.id_number}}</td>
-            <td>{{client_list.Residence}}</td>
-            <td>{{client_list.loan_balance}}</td>
-            <td><a href="{% url 'update-client' client_list.pk %}"><button type="button" name="button">Edit</button></a></td>
+              <td><a href="{{ client.get_absolute_url }}">{{client.name}}</a></td>
+            <td>{{client.phone_number}}</td>
+            <td>{{client.id_number}}</td>
+            <td>{{client.Residence}}</td>
+            <td>{{client.loan_balance}}</td>
+            <td><a href="{% url 'update-client' client.pk %}"><button type="button" name="button">Edit</button></a></td>
           </tr>
           {%endfor%}
         </table>

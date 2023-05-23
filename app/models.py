@@ -7,6 +7,7 @@ from slugify import slugify
 class Client(models.Model):
 
     name = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True, null=True)
     id_number = models.IntegerField(null=True, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
     Residence = models.CharField(max_length=50)
@@ -17,7 +18,7 @@ class Client(models.Model):
     loan_penalty = models.IntegerField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.id_number)
+        self.slug = slugify(self.name)
         super(Client, self).save(*args, **kwargs)
 
     def __str__(self):

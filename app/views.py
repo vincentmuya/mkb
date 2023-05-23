@@ -44,6 +44,11 @@ def update_client(request, pk):
     return render(request, 'update_client.html', {'form': form})
 
 
+def client_detail(request, id, slug, ):
+    client = get_object_or_404(Client, id=id, slug=slug)
+    return render(request, 'client_detail.html', {'client': client})
+
+
 def login_request(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
