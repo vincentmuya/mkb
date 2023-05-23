@@ -7,6 +7,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url("login", views.login_request, name="login"),
     url("logout", views.logout_request, name="logout"),
+    url("new/client", views.new_client, name="new_client"),
+
 ]
 
 if settings.DEBUG:

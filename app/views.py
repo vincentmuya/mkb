@@ -3,6 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from .forms import NewClientForm
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -10,6 +12,19 @@ from django.contrib import messages
 def index(request):
 
     return render(request, "index.html")
+
+
+@login_required(login_url='/accounts/login')
+def new_client(request):
+    if request.method == 'POST':
+        form = NewClientForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = NewClientForm()
+    return render(request, 'new_client.html', {'form': form})
 
 
 def login_request(request):
