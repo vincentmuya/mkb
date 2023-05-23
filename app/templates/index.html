@@ -1,6 +1,7 @@
 {%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}}
 <!DOCTYPE html>
 <html lang="en">
+<title>MKB Mic Bank</title>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -11,28 +12,8 @@
 <body>
 
     <div class="container">
-                <h1>Hello</h1>
+<h1>HELLO</h1>
 
-        {%for building in buildings %}
-    <ul class="listing">
-  <li class="building">
-    <a style="background-color:;" class="img-wrapper" href="{{ building.get_absolute_url }}">
-      <img src="{{ building.image.url }}" alt="Image" />
-         <img src="" alt="Image" />
-    </a>
-
-                <div class="info">
-                  <div class="title">{{ building.title }}</div>
-                    {% if building.price == None %}
-                    <div class="price"><a style="color:white;" href="">Request Quote</a></div>
-                        {% else %}
-                  <div class="price">KSH:{{ building.price }}/=</div>
-                    {% endif %}
-                </div>
-
-  </li>
-</ul>
-        {%endfor%}
     </div>
 </body>
 </html>
