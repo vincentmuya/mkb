@@ -11,11 +11,11 @@ class Client(models.Model):
     id_number = models.IntegerField(null=True, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
     Residence = models.CharField(max_length=50)
+    loan_collection_date = models.DateField(null=True, blank=True)
     loan_amount = models.IntegerField(null=True, blank=True)
     loan_interest = models.IntegerField(null=True, blank=True)
-    loan_value = models.IntegerField(null=True, blank=True)
-    loan_balance = models.IntegerField(null=True, blank=True)
     loan_penalty = models.IntegerField(null=True, blank=True)
+    loan_balance = models.IntegerField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
