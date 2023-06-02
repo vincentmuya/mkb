@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inde.css' %}">
 </head>
 <body>
 <h1>HELLO</h1>
@@ -19,14 +19,14 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="https://m.economictimes.com/thumb/msid-85757968,width-1200,height-900,resizemode-4,imgsize-1014169/loan-getty-25.jpg" alt="First slide">
+      <img id="carimg" class="d-block w-100" src="https://m.economictimes.com/thumb/msid-85757968,width-1200,height-900,resizemode-4,imgsize-1014169/loan-getty-25.jpg" alt="First slide">
 
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="https://www.dallasnews.com/resizer/RaAh-3H3oGSRr4AmU7pnCo-6cSk=/arc-anglerfish-arc2-prod-dmn/public/EONNGEV7SVBAJPDZV3BGXRZOCA.jpg" alt="Second slide">
+      <img id="carimg"  class="d-block w-100" src="https://i0.wp.com/financebuddha.com/blog/wp-content/uploads/2016/11/07124850/personal-loan-application.jpg?fit=4288%2C2848&ssl=1" alt="Second slide">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="https://m.economictimes.com/thumb/msid-85757968,width-1200,height-900,resizemode-4,imgsize-1014169/loan-getty-25.jpg" alt="Third slide">
+      <img id="carimg" class="d-block w-100" src="https://nairobiwire.com/wp-content/uploads/2022/05/mpower-financing-Where-to-get-loans-without-security-in-Kenya.jpg" alt="Third slide">
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -40,12 +40,25 @@
 </div>
     <div class="container">
 <h2>About Us</h2>
-        <p><p>
-        Lorem ipsum dolor sit amet. Et atque voluptatem eos molestiae sunt vel assumenda impedit eos modi saepe sed facilis voluptas quo quia placeat. Sed sequi magni cum soluta consectetur ut facere mollitia nam vero possimus non possimus voluptatem vel quia quasi. Hic autem voluptatem ut enim voluptatibus ut reiciendis sint ut animi sint aut voluptates amet. Vel totam quos ut tenetur numquam ex dolorem voluptas et impedit ipsum sit atque sunt 33 repellendus quisquam quo dicta voluptas. </p><p>Sit facilis dignissimos aut error obcaecati hic ducimus cumque. Est praesentium nisi aut dignissimos dolores vel eligendi dolore ea magnam corporis est iusto repudiandae. Ut dolorem distinctio nam ratione aperiam et voluptatem unde non ipsa nostrum est voluptas fugit? </p><p>Et facere libero ut dolore voluptas aut rerum perspiciatis eum inventore corporis quo aliquid atque est totam minus. Rem dolores voluptates non ullam quia ea similique nobis est perferendis dolores eum deserunt eius. Ut itaque consequatur aut voluptatem quia ut vitae maiores. Qui veniam repellat 33 voluptatem dolores aut quae mollitia eum totam voluptatibus qui quia velit. </p>
-</p>
+        <p>
+        Lorem ipsum dolor sit amet. Et atque voluptatem eos molestiae sunt vel assumenda impedit eos modi saepe sed facilis voluptas quo quia placeat. Sed sequi magni cum soluta consectetur ut facere mollitia nam vero possimus non possimus voluptatem vel quia quasi. Hic autem voluptatem ut enim voluptatibus ut reiciendis sint ut animi sint aut voluptates amet. Vel totam quos ut tenetur numquam ex dolorem voluptas et impedit ipsum sit atque sunt 33 repellendus quisquam quo dicta voluptas. </p><p>Sit facilis dignissimos aut error obcaecati hic ducimus cumque. Est praesentium nisi aut dignissimos dolores vel eligendi dolore ea magnam corporis est iusto repudiandae. Ut dolorem distinctio nam ratione aperiam et voluptatem unde non ipsa nostrum est voluptas fugit? </p>
+        <h2>Mission</h2>
+        <p>Et facere libero ut dolore voluptas aut rerum perspiciatis eum inventore corporis quo aliquid atque est totam minus. </p>
+        <h2>Vision</h2>
+        <p>Rem dolores voluptates non ullam quia ea similique nobis est perferendis dolores eum deserunt eius. Ut itaque consequatur aut voluptatem quia ut vitae maiores. Qui veniam repellat 33 voluptatem dolores aut quae mollitia eum totam voluptatibus qui quia velit. </p>
     </div>
 {%include 'footer.html'%}
 
 </body>
 </html>
+<style media="screen">
+#carimg{
+height:600px;
+}
+@media screen and (max-width:650px){
+#carimg{
+height:300px;
+}
+}
+  </style>
 {%endblock%}
