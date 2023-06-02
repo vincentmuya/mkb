@@ -20,7 +20,7 @@
     <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
+      <th scope="col"></th>
       <th scope="col">Name</th>
       <th scope="col">ID Number</th>
       <th scope="col">Loan Date</th>
@@ -30,7 +30,7 @@
   <tbody>
    {%for post_item in lender_list%}
     <tr>
-      <th scope="row">1</th>
+      <th scope="row"></th>
       <td><a href="{{ post_item.get_absolute_url }}">{{post_item.name}}<a/></td>
       <td>{{post_item.id_number}}</td>
       <td>{{post_item.loan_collection_date}}</td>

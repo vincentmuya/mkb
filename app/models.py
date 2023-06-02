@@ -31,8 +31,8 @@ class Client(models.Model):
         return reverse('client_detail', args=[self.id, self.slug])
 
     @classmethod
-    def search_by_title(cls, search_term):
-        search_result = cls.objects.filter(title__icontains=search_term)
+    def search_by_id_number(cls, search_term):
+        search_result = cls.objects.filter(id_number__icontains=search_term)
         return search_result
 
 class Profile(models.Model):

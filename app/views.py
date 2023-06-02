@@ -82,3 +82,10 @@ def profile(request, username):
 
 
     return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list})
+
+def search_results(request):
+    if 'name' in request.GET and request.GET["name"]:
+        search_term = request.GET.get("name")
+        searched_ref = Client.search_by_id_number(search_term)
+        message = f"{search_term}"
+        return render(request, "search.html", {"message": message, "name": searched_ref,})
