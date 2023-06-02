@@ -25,6 +25,7 @@
         <a style="color:;" class="nav-link" href="#">logged In As {{user.username}}</a>
         <a style="color:;" class="nav-link" href="{%url 'new_client'%}">New Client</a>
       <a style="color:;" class="nav-link" href="{%url 'client_list'%}">Client List</a>
+        <a style="color:;" class="nav-link" href="{%url 'profile' user.username%}">Profile</a>
       <a style="color:;" class="nav-link" href="/logout">Logout</a>
       {% else %}
       <li class="nav-item">

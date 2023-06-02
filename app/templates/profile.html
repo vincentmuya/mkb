@@ -1,0 +1,62 @@
+{%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}}
+<!DOCTYPE html>
+<html lang="en">
+<title>MKB Mic Bank</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/profil.css' %}">
+</head>
+
+<body style="margin-top: 170px;">
+<div class="container">
+<h1>Hello</h1>
+
+    {%for profile_item in user_profile%}
+    <p>Name: {{profile_item.user}}</p>
+    {%endfor%}
+
+    <h1>Hello</h1>
+
+      <div class="row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+          {%for profile_item in user_profile%}
+      <div class="col-lg-15 col-sm-15">
+        <div class="card hovercard">
+          <div class="card-background">
+
+          </div>
+
+          <div class="useravatar">
+
+          </div>
+
+          <div class="card-info"> <span class="card-title">{{profile_item.user}}</span>
+
+          </div>
+        </div>
+
+      </div>
+      <h4>Loans Given By {{profile_item.user}}</h4>
+      {%endfor%}
+      {%for post_item in lender_list%}
+      <div class="card" id="block">
+        <div class="card-body">
+          <h5 class="card-title">{{post_item.name}}</h5>
+          <p class="card-text">Ksh {{post_item.loan_balance}}/=</p>
+        </div>
+      </div>
+      {%endfor%}
+      </div>
+      <div class="col-md-2">
+
+      </div>
+      </div>
+    </div>
+</body>
+
+{%endblock%}

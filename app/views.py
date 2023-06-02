@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import NewClientForm
 from django.http import HttpResponseRedirect
-from .models import Client
+from .models import Client, Profile
 
 # Create your views here.
 
@@ -73,3 +73,12 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("/")
+
+
+@login_required(login_url='/accounts/login')
+def profile(request, username):
+    user_profile = Profile.objects.filter(user_id=request.user.id)
+    lender_list = Client.objects.filter(lender_id=request.user).order_by('loan_collection_date')[::-1]
+
+
+    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list})
