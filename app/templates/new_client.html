@@ -1,32 +1,28 @@
 {%extends 'base.html'%} {%load static%} {%block content%} {% load bootstrap4 %}
 <head>
-  <link rel="stylesheet" href="{% static 'css/.css' %}">
+  <link rel="stylesheet" href="{% static 'css/new_client.css' %}">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="HandheldFriendly" content="true">
 </head>
 <body style="background-color:;">
 {%include 'navbar.html'%}
-  <div class="container">
 
 <br>
-<div class="row">
-
-  <div class="col-md-7">
-    <h2>Add A New Client </h2>
-    <form action="{%url 'new_client'%}" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-        {% bootstrap_form form %}
-      <button class="btn btn-primary" type="submit">Submit</button>
-    </form>
-      <br>
-</div>
-
-<div class="col-md-1">
-
-</div>
-</div>
-</div>
+        <div class="container">
+         <div id="card">
+    <div id="card-content">
+      <div id="card-title">
+        <h2>New Client</h2>
+        <div class="underline-title"></div>
+      </div>
+      <form method="post">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+<input id="submit-btn" type="submit" name="submit"  />            </form>
+    </div>
+  </div>
+    </div>
 </body>
 
 {%endblock%}

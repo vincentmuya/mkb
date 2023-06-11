@@ -13,10 +13,10 @@ height:600px;
 }
 .heading{
 text-align:center;
-   text-shadow: 2px 2px 5px red;
+   text-shadow: 2px 2px 5px green;
 }
 .caption{
-text-shadow: 5px 5px 5px red;
+text-shadow: 5px 5px 5px green;
 }
 @media screen and (max-width:650px){
 #carimg{
