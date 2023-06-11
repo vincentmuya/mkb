@@ -1,0 +1,25 @@
+
+h2{
+  color:Black;
+   text-shadow: 2px 2px 5px red;
+}
+#card{
+border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px 8px 10px #888888;
+}
+#carimg{
+height:600px;
+}
+.heading{
+text-align:center;
+   text-shadow: 2px 2px 5px red;
+}
+.caption{
+text-shadow: 2px 2px 5px red;
+}
+@media screen and (max-width:650px){
+#carimg{
+height:300px;
+}
+}

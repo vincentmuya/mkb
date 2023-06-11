@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'css/inde.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 <body>
 <h1>HELLO</h1>
@@ -20,13 +20,24 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
       <img id="carimg" class="d-block w-100" src="https://m.economictimes.com/thumb/msid-85757968,width-1200,height-900,resizemode-4,imgsize-1014169/loan-getty-25.jpg" alt="First slide">
-
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="caption">Trustworthy</h5>
+        <p class="caption">Self-Trust Is The First Secret Of Successful Partnership</p>
+      </div>
     </div>
     <div class="carousel-item">
       <img id="carimg"  class="d-block w-100" src="https://i0.wp.com/financebuddha.com/blog/wp-content/uploads/2016/11/07124850/personal-loan-application.jpg?fit=4288%2C2848&ssl=1" alt="Second slide">
+         <div class="carousel-caption d-none d-md-block">
+        <h5 class="caption">Reliable</h5>
+        <p class="caption">Always There For You</p>
+      </div>
     </div>
     <div class="carousel-item">
       <img id="carimg" class="d-block w-100" src="https://nairobiwire.com/wp-content/uploads/2022/05/mpower-financing-Where-to-get-loans-without-security-in-Kenya.jpg" alt="Third slide">
+     <div class="carousel-caption d-none d-md-block">
+        <h5 class="caption">Transparent</h5>
+        <p class="caption">Save Money. Live Better.</p>
+      </div>
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -38,27 +49,31 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+<br>
     <div class="container">
-<h2>About Us</h2>
-        <p>
-        Lorem ipsum dolor sit amet. Et atque voluptatem eos molestiae sunt vel assumenda impedit eos modi saepe sed facilis voluptas quo quia placeat. Sed sequi magni cum soluta consectetur ut facere mollitia nam vero possimus non possimus voluptatem vel quia quasi. Hic autem voluptatem ut enim voluptatibus ut reiciendis sint ut animi sint aut voluptates amet. Vel totam quos ut tenetur numquam ex dolorem voluptas et impedit ipsum sit atque sunt 33 repellendus quisquam quo dicta voluptas. </p><p>Sit facilis dignissimos aut error obcaecati hic ducimus cumque. Est praesentium nisi aut dignissimos dolores vel eligendi dolore ea magnam corporis est iusto repudiandae. Ut dolorem distinctio nam ratione aperiam et voluptatem unde non ipsa nostrum est voluptas fugit? </p>
-        <h2>Mission</h2>
+        <div id="card" name="about" class="card w-100 mb-3">
+            <div class="card-body">
+            <h2 class="heading">About Us</h2>
+            <p class="card-text">
+            Lorem ipsum dolor sit amet. Et atque voluptatem eos molestiae sunt vel assumenda impedit eos modi saepe sed facilis voluptas quo quia placeat. Sed sequi magni cum soluta consectetur ut facere mollitia nam vero possimus non possimus voluptatem vel quia quasi. Hic autem voluptatem ut enim voluptatibus ut reiciendis sint ut animi sint aut voluptates amet. Vel totam quos ut tenetur numquam ex dolorem voluptas et impedit ipsum sit atque sunt 33 repellendus quisquam quo dicta voluptas. </p><p>Sit facilis dignissimos aut error obcaecati hic ducimus cumque. Est praesentium nisi aut dignissimos dolores vel eligendi dolore ea magnam corporis est iusto repudiandae. Ut dolorem distinctio nam ratione aperiam et voluptatem unde non ipsa nostrum est voluptas fugit? </p>
+         </div>
+        </div>
+        <div id="card" class="card w-100 mb-3">
+            <div class="card-body">
+        <h2 class="heading">Mission</h2>
         <p>Et facere libero ut dolore voluptas aut rerum perspiciatis eum inventore corporis quo aliquid atque est totam minus. </p>
-        <h2>Vision</h2>
+        </div>
+        </div>
+        <div id="card" class="card w-100 mb-3">
+            <div class="card-body">
+        <h2 class="heading">Vision</h2>
         <p>Rem dolores voluptates non ullam quia ea similique nobis est perferendis dolores eum deserunt eius. Ut itaque consequatur aut voluptatem quia ut vitae maiores. Qui veniam repellat 33 voluptatem dolores aut quae mollitia eum totam voluptatibus qui quia velit. </p>
+        </div>
+        </div>
     </div>
 {%include 'footer.html'%}
 
 </body>
 </html>
-<style media="screen">
-#carimg{
-height:600px;
-}
-@media screen and (max-width:650px){
-#carimg{
-height:300px;
-}
-}
-  </style>
+
 {%endblock%}
