@@ -24,4 +24,7 @@ text-shadow: 5px 5px 5px green;
 #carimg{
 height:300px;
 }
+body{
+margin-bottom: 200px;
+}
 }
