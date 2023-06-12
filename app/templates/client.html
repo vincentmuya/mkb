@@ -29,7 +29,7 @@
   <th>Phone Number</th>
   <th>ID Number</th>
   <th>Residence</th>
-  <th>Loan Amount</th>
+  <th>Loan Balance</th>
   </tr>
           <!-- Looping through cargo   -->
           {%  for client in client %}
@@ -39,7 +39,9 @@
             <td>{{client.id_number}}</td>
             <td>{{client.Residence}}</td>
             <td>{{client.loan_balance}}</td>
-            <td><a href="{% url 'update-client' client.pk %}"><button type="button" class="btn btn-success" name="button">Update</button></a></td>
+            <td><a href="{{ client.get_absolute_url }}"><button type="button" class="btn btn-info" name="button">View Details</button></a></td>
+          <td><a href="{% url 'update-client' client.pk %}"><button type="button" class="btn btn-success" name="button">Update</button></a></td>
+
           </tr>
           {%endfor%}
         </table>
@@ -49,6 +51,8 @@
     </div>
   </div>
     </div>
+{%include 'footer.html'%}
+
 </body>
 </html>
 {%endblock%}

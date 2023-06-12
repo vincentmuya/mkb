@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
 
-<body style="margin-top: 170px;">
+<body>
 <div class="container">
           {%for profile_item in user_profile%}
+
           <h2>Logged In As {{profile_item.user}}</h2>
+            <div class="underline-title"></div>
         <br>
       <h4>Loans Given By {{profile_item.user}}</h4>
       {%endfor%}
@@ -40,7 +42,9 @@
 
   </tbody>
 </table>
-      </div>
+</div>
+{%include 'footer.html'%}
+
 </body>
 
 {%endblock%}
