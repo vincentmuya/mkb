@@ -1,5 +1,5 @@
 body{
-padding-top:50px;
+padding-top:100px;
 }
 .titlebold{
 font-weight: 0;
@@ -54,7 +54,12 @@ margin-right: 0px;
 b, strong {
 font-weight: 600;
 }
-
+.underline-title {
+  background: -webkit-linear-gradient(right, #a6f77b, #2ec06f);
+  height: 2px;
+  margin: -1.1rem auto 0 auto;
+  width: 89px;
+}
 @media screen and (max-width: 650px) {
 .track-card{
   width: 21rem;

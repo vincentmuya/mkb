@@ -1,10 +1,19 @@
-#card {
+  body{
+    padding-top: 0%;
+    background-image: url("");
+    background-color:;
+    color:;
+  }
+    .panel{
+    margin-top: 5%;
+  }
+ #card {
   background: #fbfbfb;
   border-radius: 8px;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
-  height: 1000px;
+  height: 410px;
   margin: 6rem auto 8.1rem auto;
-  width: 500px;
+  width: 329px;
 }
 #card-content {
   padding: 12px 44px;
@@ -53,5 +62,5 @@
   background: -webkit-linear-gradient(right, #a6f77b, #2ec06f);
   height: 2px;
   margin: -1.1rem auto 0 auto;
-  width: 250px;
+  width: 89px;
 }
