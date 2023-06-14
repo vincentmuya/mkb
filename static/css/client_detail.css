@@ -1,6 +1,9 @@
 body{
 padding-top:100px;
 }
+h2 {
+    text-align: center;
+}
 .titlebold{
 font-weight: 0;
 font-size: 15px;
@@ -58,7 +61,7 @@ font-weight: 600;
   background: -webkit-linear-gradient(right, #a6f77b, #2ec06f);
   height: 2px;
   margin: -1.1rem auto 0 auto;
-  width: 89px;
+  width: 200px;
 }
 @media screen and (max-width: 650px) {
 .track-card{
