@@ -20,11 +20,26 @@ text-align:center;
 .caption{
 text-shadow: 5px 5px 5px green;
 }
+.caption-text{
+text-shadow: 5px 5px 5px green;
+}
 @media screen and (max-width:650px){
 #carimg{
 height:300px;
 }
+.caption-text{
+font-size:12px;
+text-shadow: 5px 5px 5px green;
+}
 body{
 margin-bottom: 200px;
+}
+.heading {
+    text-align: center;
+    font-size: 20px;
+    text-shadow: 2px 2px 5px green;
+}
+.card-text{
+font-size:12px;
 }
 }

@@ -12,8 +12,11 @@ h2 {
 }
 @media screen and (max-width: 650px) {
 body{
-margin-top:50px;
+margin-top:60px;
 margin-bottom:200px;
+}
+h2 {
+font-size:30px
 }
 .d-none {
     display: initial;
