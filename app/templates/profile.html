@@ -27,6 +27,7 @@
       <th scope="col">ID Number</th>
       <th scope="col">Loan Date</th>
         <th scope="col">Loan Balance</th>
+        <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -37,10 +38,23 @@
       <td>{{post_item.id_number}}</td>
       <td>{{post_item.loan_collection_date}}</td>
         <td>KSH{{post_item.loan_balance}}/=</td>
+        <td><a href="{{ post_item.get_absolute_url }}"><button type="button" class="btn btn-info" name="button">Details</button></a></td>
+        <td><a href="{% url 'update-client' post_item.pk %}"><button type="button" class="btn btn-success" name="button">Update</button></a></td>
+
     </tr>
      {%endfor%}
 
   </tbody>
+          <thead class="thead-dark">
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Total</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+        <th scope="col">{{total}}</th>
+        <th scope="col"></th>
+    </tr>
+  </thead>
 </table>
 </div>
 {%include 'footer.html'%}

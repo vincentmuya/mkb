@@ -6,6 +6,8 @@ from django.contrib import messages
 from .forms import NewClientForm
 from django.http import HttpResponseRedirect
 from .models import Client, Profile
+from django.db.models import Sum
+
 
 # Create your views here.
 
@@ -31,7 +33,8 @@ def new_client(request):
 @login_required(login_url='/accounts/login')
 def client_list(request):
     client = Client.objects.all()
-    return render(request, 'client.html', {"client": client})
+    total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
+    return render(request, 'client.html', {"client": client, "total":total})
 
 
 @login_required(login_url='/accounts/login')
@@ -79,9 +82,12 @@ def logout_request(request):
 def profile(request, username):
     user_profile = Profile.objects.filter(user_id=request.user.id)
     lender_list = Client.objects.filter(lender_id=request.user).order_by('loan_collection_date')[::-1]
+    total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
+    client = Client.objects.all()
 
 
-    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list})
+
+    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list, "total":total})
 
 def search_results(request):
     if 'name' in request.GET and request.GET["name"]:

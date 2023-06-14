@@ -43,7 +43,15 @@
           <td><a href="{% url 'update-client' client.pk %}"><button type="button" class="btn btn-success" name="button">Update</button></a></td>
 
           </tr>
+
           {%endfor%}
+        <tr>
+  <th>Total</th>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th>{{total}}</th>
+  </tr>
         </table>
         </div>
         </div>
