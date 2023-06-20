@@ -6,9 +6,9 @@
     <title>NKB Mic Bank</title>
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light navbar fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-dark navbar fixed-top">
   <a class="navbar-brand" href="{%url 'index'%}">
-    <img class="logo" src="/static/images/nkb_logo.png" alt=""></a>
+    <img class="logo" src="/static/images/nkb_logo.jpg" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -16,17 +16,17 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{%url 'index'%}">Home <span class="sr-only">(current)</span></a>
+        <a style="color:white;" class="nav-link" href="{%url 'index'%}">Home <span class="sr-only">(current)</span></a>
       </li>
           {% if user.is_authenticated and user.is_superuser %}
-        <a style="color:;" class="nav-link" href="{%url 'new_client'%}">New Client</a>
-      <a style="color:;" class="nav-link" href="{%url 'client_list'%}">Client List</a>
-        <a style="color:;" class="nav-link" href="{%url 'profile' user.username%}">Profile</a>
-        <a style="color:;" class="nav-link" href="{%url 'profile' user.username%}">logged In As {{user.username}}</a>
-      <a style="color:;" class="nav-link" href="/logout">Logout</a>
+        <a style="color:white;" class="nav-link" href="{%url 'new_client'%}">New Client</a>
+      <a style="color:white;" class="nav-link" href="{%url 'client_list'%}">Client List</a>
+        <a style="color:white;" class="nav-link" href="{%url 'profile' user.username%}">Profile</a>
+        <a style="color:white;" class="nav-link" href="{%url 'profile' user.username%}">logged In As {{user.username}}</a>
+      <a style="color:white;" class="nav-link" href="/logout">Logout</a>
       {% else %}
       <li class="nav-item">
-        <a style="color:;" class="nav-link" href="{%url 'login'%}">Admin Login</a>
+        <a style="color:white;" class="nav-link" href="{%url 'login'%}">Admin Login</a>
       </li>
 
         {% endif %}
@@ -40,19 +40,16 @@
     {% endif %}
   </div>
 </nav>
-<style media="screen">
-.logo{
-height:50px;
-width:120px;
-}
-@media screen and (max-width:650px){
-#carimg{
-height:300px;
-}
-.logo{
-height:35px;
-width:60px;
-}
-}
-  </style>
+<!--<style media="screen">-->
+<!--.logo{-->
+<!--height:50px;-->
+<!--width:120px;-->
+<!--}-->
+<!--@media screen and (max-width:650px){-->
+<!--.logo{-->
+<!--height:35px;-->
+<!--width:60px;-->
+<!--}-->
+<!--}-->
+<!--  </style>-->
 {% endblock %}

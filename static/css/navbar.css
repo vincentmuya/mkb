@@ -1,6 +1,12 @@
 .logo{
-height:75px;
+height:50px;
 width:150px;
+}
+.bg-dark {
+    background-color: black;
+}
+.navbar-light .navbar-toggler {
+    border-color: gold;
 }
 @media screen and (max-width:650px){
 #carimg{
@@ -8,6 +14,6 @@ height:300px;
 }
 .logo{
 height:40px;
-width:80px;
+width:100px;
 }
 }
