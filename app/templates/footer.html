@@ -9,17 +9,22 @@
   <div class="footer">
       <div class="row">
     <div class="col-sm">
-      One of three columns
-      <p>Contact Info</p>
+      <h5>Contact Info</h5>
       <p>Telephone: +254712345678</p>
       <p>Email:nkbmicbang@mail.com</p>
       <p>© 2023 NKB Mic Bank</p>
     </div>
     <div class="col-sm">
-      One of three columns
+        <img class="footer_img" src="/static/images/nkb_logo.jpg">
+      <img class="footer_img" src="https://epayrent.co.ke/mpesa.jpg">
     </div>
     <div class="col-sm">
-      One of three columns
+        <h5 class="">Feedback Or Inquiry</h5>
+         <form method="post" >
+      {% csrf_token %}
+        {% bootstrap_form feedback_form %}
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
     </div>
   </div>
 </div>

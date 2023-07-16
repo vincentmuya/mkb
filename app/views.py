@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from .forms import NewClientForm
+from .forms import NewClientForm, FeedbackInquiryForm
 from django.http import HttpResponseRedirect
 from .models import Client, Profile
 from django.db.models import Sum
@@ -13,8 +13,19 @@ from django.db.models import Sum
 
 
 def index(request):
+    if request.method == 'POST':
+        feedback_form = FeedbackInquiryForm(request.POST)
+        if feedback_form.is_valid():
+            sender = feedback_form.cleaned_data['email']
+            subject = "You have a new Question or Inquiry from {}".format(sender)
+            message_content = "Message: {}".format(feedback_form.cleaned_data['message_content'])
+            message = "The Question or Inquiry is {}".format(message_content)
 
-    return render(request, "index.html")
+            return HttpResponseRedirect('/')
+    else:
+        feedback_form = FeedbackInquiryForm()
+
+    return render(request, "index.html",{'feedback_form': feedback_form})
 
 
 @login_required(login_url='/accounts/login')
@@ -27,14 +38,37 @@ def new_client(request):
             return HttpResponseRedirect('/')
     else:
         form = NewClientForm()
-    return render(request, 'new_client.html', {'form': form})
+    if request.method == 'POST':
+        feedback_form = FeedbackInquiryForm(request.POST)
+        if feedback_form.is_valid():
+            sender = feedback_form.cleaned_data['email']
+            subject = "You have a new Question or Inquiry from {}".format(sender)
+            message_content = "Message: {}".format(feedback_form.cleaned_data['message_content'])
+            message = "The Question or Inquiry is {}".format(message_content)
+
+            return HttpResponseRedirect('/')
+    else:
+        feedback_form = FeedbackInquiryForm()
+    return render(request, 'new_client.html', {'form': form, 'feedback_form': feedback_form})
 
 
 @login_required(login_url='/accounts/login')
 def client_list(request):
     client = Client.objects.all()
     total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
-    return render(request, 'client.html', {"client": client, "total":total})
+    if request.method == 'POST':
+        feedback_form = FeedbackInquiryForm(request.POST)
+        if feedback_form.is_valid():
+            sender = feedback_form.cleaned_data['email']
+            subject = "You have a new Question or Inquiry from {}".format(sender)
+            message_content = "Message: {}".format(feedback_form.cleaned_data['message_content'])
+            message = "The Question or Inquiry is {}".format(message_content)
+
+            return HttpResponseRedirect('/')
+    else:
+        feedback_form = FeedbackInquiryForm()
+
+    return render(request, 'client.html', {"client": client, "total":total, 'feedback_form': feedback_form})
 
 
 @login_required(login_url='/accounts/login')
@@ -44,12 +78,34 @@ def update_client(request, pk):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect('/')
-    return render(request, 'update_client.html', {'form': form})
+    if request.method == 'POST':
+        feedback_form = FeedbackInquiryForm(request.POST)
+        if feedback_form.is_valid():
+            sender = feedback_form.cleaned_data['email']
+            subject = "You have a new Question or Inquiry from {}".format(sender)
+            message_content = "Message: {}".format(feedback_form.cleaned_data['message_content'])
+            message = "The Question or Inquiry is {}".format(message_content)
+
+            return HttpResponseRedirect('/')
+    else:
+        feedback_form = FeedbackInquiryForm()
+    return render(request, 'update_client.html', {'form': form, 'feedback_form': feedback_form})
 
 
 def client_detail(request, id, slug, ):
     client = get_object_or_404(Client, id=id, slug=slug)
-    return render(request, 'client_detail.html', {'client': client})
+    if request.method == 'POST':
+        feedback_form = FeedbackInquiryForm(request.POST)
+        if feedback_form.is_valid():
+            sender = feedback_form.cleaned_data['email']
+            subject = "You have a new Question or Inquiry from {}".format(sender)
+            message_content = "Message: {}".format(feedback_form.cleaned_data['message_content'])
+            message = "The Question or Inquiry is {}".format(message_content)
+
+            return HttpResponseRedirect('/')
+    else:
+        feedback_form = FeedbackInquiryForm()
+    return render(request, 'client_detail.html', {'client': client, 'feedback_form': feedback_form})
 
 
 def login_request(request):
@@ -68,8 +124,18 @@ def login_request(request):
         else:
             messages.error(request, "Invalid username or password.")
     form = AuthenticationForm()
+    if request.method == 'POST':
+        feedback_form = FeedbackInquiryForm(request.POST)
+        if feedback_form.is_valid():
+            sender = feedback_form.cleaned_data['email']
+            subject = "You have a new Question or Inquiry from {}".format(sender)
+            message_content = "Message: {}".format(feedback_form.cleaned_data['message_content'])
+            message = "The Question or Inquiry is {}".format(message_content)
 
-    return render(request, 'registration/login.html', {'form': form})
+            return HttpResponseRedirect('/')
+    else:
+        feedback_form = FeedbackInquiryForm()
+    return render(request, 'registration/login.html', {'form': form, 'feedback_form': feedback_form})
 
 
 def logout_request(request):
@@ -84,14 +150,34 @@ def profile(request, username):
     lender_list = Client.objects.filter(lender_id=request.user).order_by('loan_collection_date')[::-1]
     total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
     client = Client.objects.all()
+    if request.method == 'POST':
+        feedback_form = FeedbackInquiryForm(request.POST)
+        if feedback_form.is_valid():
+            sender = feedback_form.cleaned_data['email']
+            subject = "You have a new Question or Inquiry from {}".format(sender)
+            message_content = "Message: {}".format(feedback_form.cleaned_data['message_content'])
+            message = "The Question or Inquiry is {}".format(message_content)
 
+            return HttpResponseRedirect('/')
+    else:
+        feedback_form = FeedbackInquiryForm()
 
-
-    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list, "total":total})
+    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list, "total":total, 'feedback_form': feedback_form})
 
 def search_results(request):
     if 'name' in request.GET and request.GET["name"]:
         search_term = request.GET.get("name")
         searched_ref = Client.search_by_id_number(search_term)
         message = f"{search_term}"
-        return render(request, "search.html", {"message": message, "name": searched_ref,})
+    if request.method == 'POST':
+        feedback_form = FeedbackInquiryForm(request.POST)
+        if feedback_form.is_valid():
+            sender = feedback_form.cleaned_data['email']
+            subject = "You have a new Question or Inquiry from {}".format(sender)
+            message_content = "Message: {}".format(feedback_form.cleaned_data['message_content'])
+            message = "The Question or Inquiry is {}".format(message_content)
+
+            return HttpResponseRedirect('/')
+    else:
+        feedback_form = FeedbackInquiryForm()
+        return render(request, "search.html", {"message": message, "name": searched_ref, 'feedback_form': feedback_form})

@@ -14,3 +14,7 @@ class NewClientForm(forms.ModelForm):
         widgets = {
             'loan_collection_date': DateInput(),
         }
+
+class FeedbackInquiryForm(forms.Form):
+    email = forms.EmailField(required=True)
+    message_content = forms.CharField(widget=forms.Textarea)
