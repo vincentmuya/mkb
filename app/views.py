@@ -27,14 +27,31 @@ def index(request):
 
     return render(request, "index.html",{'feedback_form': feedback_form})
 
+def calculate_loan_penalty(loan_amount, loan_interest):
+    # Implement your logic to calculate the loan balance based on the loan amount, interest, and penalty
+    return int(loan_amount * loan_interest /100)
+
+def calculate_loan_balance(loan_amount, loan_interest):
+    # Implement your logic to calculate the loan balance based on the loan amount, interest, and penalty
+    return int(loan_amount * loan_interest /100 + loan_amount)
 
 @login_required(login_url='/accounts/login')
 def new_client(request):
     if request.method == 'POST':
         form = NewClientForm(request.POST, request.FILES)
         if form.is_valid():
-            product = form.save(commit=False)
-            product.save()
+            client = form.save(commit=False)
+            # Calculate loan interest based on the loan amount (Principal)
+            loan_amount = form.cleaned_data['loan_amount']
+            loan_interest = form.cleaned_data['loan_interest']
+            # Calculate and loan balance
+            loan_penalty = calculate_loan_penalty(loan_amount, loan_interest)
+            loan_balance = calculate_loan_balance(loan_amount, loan_interest)
+            # Assign the calculated values to the respective fields
+            client.loan_interest = loan_interest
+            client.loan_penalty = loan_penalty
+            client.loan_balance = loan_balance
+            client.save()
             return HttpResponseRedirect('/')
     else:
         form = NewClientForm()

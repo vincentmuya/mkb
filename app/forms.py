@@ -10,7 +10,7 @@ class NewClientForm(forms.ModelForm):
 
     class Meta:
         model = Client
-        exclude = ["slug", "lender"]
+        exclude = ["slug", "lender", "loan_balance", "loan_penalty"]
         widgets = {
             'loan_collection_date': DateInput(),
         }
