@@ -7,6 +7,7 @@ from .forms import NewClientForm, FeedbackInquiryForm
 from django.http import HttpResponseRedirect
 from .models import Client, Profile
 from django.db.models import Sum
+from datetime import date, timedelta, datetime
 
 
 # Create your views here.
@@ -69,10 +70,26 @@ def new_client(request):
     return render(request, 'new_client.html', {'form': form, 'feedback_form': feedback_form})
 
 
+def update_loan_balance(request, client_id):
+    # Get the client object from the database
+    client = get_object_or_404(Client, id=client_id)
+    # Calculate the number of weeks since the loan was taken
+    week_passed = (date.today() - client.loan_collection_date).days // 7
+    # Calculate the total penalty to be added based on the number of weeks
+    total_penalty =  week_passed * client.loan_penalty
+    # Add the total_penalty to the loan_balance
+    client.loan_balance += total_penalty
+
+
+
+
 @login_required(login_url='/accounts/login')
 def client_list(request):
     client = Client.objects.all()
     total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
+    # Loop through each client and update their loan balance using the update_loan_balance function
+    for clients in client:
+        update_loan_balance(request, clients.id)
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
@@ -167,6 +184,9 @@ def profile(request, username):
     lender_list = Client.objects.filter(lender_id=request.user).order_by('loan_collection_date')[::-1]
     total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
     client = Client.objects.all()
+    # Loop through each client and update their loan balance using the update_loan_balance function
+    for clients in lender_list:
+        update_loan_balance(request, clients.id)
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
