@@ -12,11 +12,14 @@
 <body>
 <div class="container">
           {%for profile_item in user_profile%}
-
-          <h2>Logged In As {{profile_item.user}}</h2>
-            <div class="underline-title"></div>
-        <br>
-      <h4>Loans Given By {{profile_item.user}}</h4>
+        <div id="card-content">
+        <div id="card-title">
+      <h2>Logged In As {{profile_item.user}}</h2>
+        <div class="underline-title"></div>
+    <br>
+  <h4>Loans Given By {{profile_item.user}}</h4>
+    <div class="underline-title"></div>
+    </div>
       {%endfor%}
 
     <table class="table">
@@ -57,6 +60,8 @@
   </thead>
 </table>
 </div>
+</div>
+
 {%include 'footer.html'%}
 
 

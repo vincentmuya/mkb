@@ -33,7 +33,7 @@ margin: 6rem auto 8.1rem auto;
 width: 900px;
 }
 #card-content {
-padding: 12px 44px;
+padding: 70px 1px;
 }
 #card-title {
 font-family: "Raleway Thin", sans-serif;
@@ -50,6 +50,18 @@ width: 200px;
 }
 
 @media screen and (max-width:650px){
+body{
+margin-top:60px;
+}
+h2{
+font-size:25px;
+}
+.underline-title {
+  background: -webkit-linear-gradient(right, #a6f77b, #2ec06f);
+  height: 2px;
+  margin: -1rem auto 0 auto;
+  width: 150px;
+}
 #card {
     background: #fbfbfb;
     border-radius: 8px;

@@ -10,15 +10,33 @@ margin-top:90px;
 h2 {
     text-align: center;
 }
+#card-content {
+padding: 100px 1px;
+}
 @media screen and (max-width: 650px) {
 body{
 margin-top:60px;
 margin-bottom:200px;
 }
-h2 {
-font-size:30px
+h2{
+font-size:20px
+}
+h4{
+font-size:17px
 }
 .d-none {
     display: initial;
+}
+.underline-title {
+background: -webkit-linear-gradient(right, #a6f77b, #2ec06f);
+height: 2px;
+margin: -0.9rem auto 0 auto;
+width: 250px;
+}
+th, td{
+font-size:12px;
+}
+button{
+font-size:10px;
 }
 }

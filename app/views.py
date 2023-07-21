@@ -38,6 +38,7 @@ def calculate_loan_balance(loan_amount, loan_interest):
 
 @login_required(login_url='/accounts/login')
 def new_client(request):
+    current_user = request.user
     if request.method == 'POST':
         form = NewClientForm(request.POST, request.FILES)
         if form.is_valid():
@@ -52,6 +53,7 @@ def new_client(request):
             client.loan_interest = loan_interest
             client.loan_penalty = loan_penalty
             client.loan_balance = loan_balance
+            client.lender = current_user
             client.save()
             return HttpResponseRedirect('/')
     else:
@@ -85,7 +87,7 @@ def update_loan_balance(request, client_id):
 
 @login_required(login_url='/accounts/login')
 def client_list(request):
-    client = Client.objects.all()
+    client = Client.objects.all()[::-1]
     total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
     # Loop through each client and update their loan balance using the update_loan_balance function
     for clients in client:
@@ -180,7 +182,7 @@ def logout_request(request):
 
 @login_required(login_url='/accounts/login')
 def profile(request, username):
-    user_profile = Profile.objects.filter(user_id=request.user.id)
+    user_profile = Profile.objects.filter(user_id=request.user.id)[::-1]
     lender_list = Client.objects.filter(lender_id=request.user).order_by('loan_collection_date')[::-1]
     total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
     client = Client.objects.all()
