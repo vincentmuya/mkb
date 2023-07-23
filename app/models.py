@@ -19,6 +19,7 @@ class Client(models.Model):
     loan_interest = models.IntegerField(null=True, blank=True)
     loan_penalty = models.IntegerField(null=True, blank=True)
     loan_balance = models.IntegerField(null=True, blank=True)
+    is_loan_paid = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -35,6 +36,13 @@ class Client(models.Model):
         search_result = cls.objects.filter(id_number__icontains=search_term)
         return search_result
 
+
+class LoanHistory(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    date_paid = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.client.name} - Paid on: {self.date_paid}"
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 

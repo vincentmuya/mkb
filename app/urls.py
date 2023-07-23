@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$', views.client_detail, name='client_detail'),
     url(r'^profile/(?P<username>[\w\-]+)/$', views.profile, name='profile'),
     url(r'^search$', views.search_results, name='search_results'),
+    url('loan_paid/(?P<id_number>\d+)/$', views.loan_paid, name='loan_paid'),
 
 ]
 

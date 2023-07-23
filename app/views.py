@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import NewClientForm, FeedbackInquiryForm
 from django.http import HttpResponseRedirect
-from .models import Client, Profile
+from .models import Client, Profile, LoanHistory
 from django.db.models import Sum
 from datetime import date, timedelta, datetime
 
@@ -143,6 +143,17 @@ def client_detail(request, id, slug, ):
         feedback_form = FeedbackInquiryForm()
     return render(request, 'client_detail.html', {'client': client, 'feedback_form': feedback_form})
 
+def loan_paid(request, id_number):
+    client = get_object_or_404(Client, id_number=id_number)
+
+    # Mark the loan as paid and save
+    client.is_loan_paid = True
+    client.save()
+
+    # Create a loan history entry
+    LoanHistory.objects.create(client=client)
+
+    return HttpResponse("Loan Paid Successfully!")
 
 def login_request(request):
     if request.method == "POST":
