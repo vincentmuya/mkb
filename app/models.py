@@ -39,7 +39,23 @@ class Client(models.Model):
 
 class LoanHistory(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, null=True, blank=True)
+    id_number = models.IntegerField(null=True, blank=True)
     date_paid = models.DateField(auto_now_add=True)
+    loan_collection_date = models.DateField(null=True, blank=True)
+    loan_amount = models.IntegerField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # Copy loan_collection_date and loan_amount from the client when saving a new record in LoanHistory
+        if not self.name:
+            self.name = self.client.name
+        if not self.id_number:
+            self.id_number = self.client.id_number
+        if not self.loan_collection_date:
+            self.loan_collection_date = self.client.loan_collection_date
+        if not self.loan_amount:
+            self.loan_amount = self.client.loan_amount
+        super(LoanHistory, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.client.name} - Paid on: {self.date_paid}"

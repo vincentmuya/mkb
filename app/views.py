@@ -87,7 +87,7 @@ def update_loan_balance(request, client_id):
 
 @login_required(login_url='/accounts/login')
 def client_list(request):
-    client = Client.objects.all()[::-1]
+    client = Client.objects.filter(is_loan_paid=False)[::-1]
     total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
     # Loop through each client and update their loan balance using the update_loan_balance function
     for clients in client:
@@ -154,6 +154,7 @@ def loan_paid(request, id_number):
     LoanHistory.objects.create(client=client)
 
     return HttpResponse("Loan Paid Successfully!")
+
 
 def login_request(request):
     if request.method == "POST":
