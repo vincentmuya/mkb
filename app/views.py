@@ -155,7 +155,6 @@ def loan_paid(request, id_number):
 
     return HttpResponse("Loan Paid Successfully!")
 
-
 def login_request(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)

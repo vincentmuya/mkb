@@ -47,6 +47,19 @@
     </div>
     </div>
     <br>
+    {%if client.is_loan_paid %}
+<h4>Loan History</h4>
+
+          <table id="customers">
+    <tr>
+      <td><strong>Loan Amount:{{ client.loan_amount }} </strong><br></td>
+    </tr>
+    <tr>
+      <td><strong>Loan Collection Date:{{ client.loan_collection_date }} </strong><br></td>
+      <td><strong>Loan Date Paid:{{ client.date_paid }} </strong><br></td>
+    </tr>
+    </table>
+    {% else %}
     <table id="customers">
     <tr>
       <td><strong>Loan Amount:{{ client.loan_amount }} </strong><br></td>
@@ -67,6 +80,7 @@
       <td style="color:red;"></td>
     </tr>
     </table>
+    {% endif %}
     <br>
   </div>
 </div>
