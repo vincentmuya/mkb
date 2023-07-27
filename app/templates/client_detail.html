@@ -50,7 +50,7 @@
     {%if client.is_loan_paid %}
 <h4>Loan History</h4>
 
-          <table id="customers">
+      <table id="customers">
     <tr>
       <td><strong>Loan Amount:{{ client.loan_amount }} </strong><br></td>
     </tr>
@@ -59,8 +59,41 @@
       <td><strong>Loan Date Paid:{{ client.date_paid }} </strong><br></td>
     </tr>
     </table>
-    {% else %}
+    {% elif client.id_number in history_ids or client.id_number in clients_with_loan and client.is_loan_paid %}
     <table id="customers">
+    <tr>
+      <td><strong>Loan Amount:{{ client.loan_amount }} </strong><br></td>
+      <td><strong>Loan Interest:{{ client.loan_interest }} </strong><br></td>
+    </tr>
+    <tr>
+      <td><strong>Loan Collection Date:{{ client.loan_collection_date }} </strong><br></td>
+      <td><strong>Loan Penalty:{{ client.loan_penalty }} </strong><br></td>
+    </tr>
+    <tr>
+      <td><strong>Loan Balance:{{ client.loan_balance }} </strong></td>
+    </tr>
+    <tr>
+      <td ><strong><a href="{% url 'update-client' client.pk %}"><button type="button" class="btn btn-success" name="button">Update{{ client.name }}'s Details </button></a></strong></td>
+          <td><a href="{% url 'loan_paid' client.id_number  %}"><button type="button" class="btn btn-danger" name="button">Paid</button></a></td>
+
+    </tr>
+    </table>
+      <h4>Loan History</h4>
+
+    <table id="customers">
+        {% for loan in history %}
+    <tr>
+      <td><strong>Loan Amount:{{ loan.loan_amount }} </strong><br></td>
+        <td><strong>ID Number:{{ loan.id_number }} </strong><br></td>
+    </tr>
+    <tr>
+      <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
+      <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
+    </tr>
+        {% endfor %}
+    </table>
+    {% else%}
+      <table id="customers">
     <tr>
       <td><strong>Loan Amount:{{ client.loan_amount }} </strong><br></td>
       <td><strong>Loan Interest:{{ client.loan_interest }} </strong><br></td>

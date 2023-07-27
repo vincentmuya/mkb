@@ -130,6 +130,13 @@ def update_client(request, pk):
 
 def client_detail(request, id, slug, ):
     client = get_object_or_404(Client, id=id, slug=slug)
+    history = LoanHistory.objects.filter(id_number=client.id_number)  # Get loan history for the client's id_number
+    all_clients = Client.objects.filter(id_number=client.id_number)   # Get all clients with the same id_number
+
+    # Prepare the list of id_numbers present in LoanHistory and all Clients with the same id_number
+    history_ids = list(history.values_list('id_number', flat=True))
+    clients_with_loan = list(all_clients.values_list('id_number', flat=True))
+
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
@@ -141,7 +148,7 @@ def client_detail(request, id, slug, ):
             return HttpResponseRedirect('/')
     else:
         feedback_form = FeedbackInquiryForm()
-    return render(request, 'client_detail.html', {'client': client, 'feedback_form': feedback_form})
+    return render(request, 'client_detail.html', {'client': client, 'history':history, 'feedback_form': feedback_form, 'history_ids': history_ids, 'clients_with_loan': clients_with_loan})
 
 def loan_paid(request, id_number):
     client = get_object_or_404(Client, id_number=id_number)

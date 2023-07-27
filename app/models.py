@@ -10,7 +10,7 @@ from django.db.models.signals import post_save
 class Client(models.Model):
     lender = models.ForeignKey(User, null = True, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=False, null=True)
     id_number = models.IntegerField(null=True, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
     Residence = models.CharField(max_length=50)
