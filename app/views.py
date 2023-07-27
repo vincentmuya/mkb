@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse, get_list_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -150,8 +150,14 @@ def client_detail(request, id, slug, ):
         feedback_form = FeedbackInquiryForm()
     return render(request, 'client_detail.html', {'client': client, 'history':history, 'feedback_form': feedback_form, 'history_ids': history_ids, 'clients_with_loan': clients_with_loan})
 
-def loan_paid(request, id_number):
-    client = get_object_or_404(Client, id_number=id_number)
+def loan_paid(request,  id_number):
+    client = get_list_or_404(Client, id_number=id_number)
+    if len(client) > 1:
+        # If multiple clients found, choose the first one and save it
+        client = client[0]
+    else:
+        # If only one client found, use that client for loan payment
+        client = client[0]
 
     # Mark the loan as paid and save
     client.is_loan_paid = True
