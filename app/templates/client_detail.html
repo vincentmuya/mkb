@@ -47,7 +47,18 @@
     </div>
     </div>
     <br>
-    {%if client.is_loan_paid %}
+  {% if all_loans_paid %}
+    <h4>All Loans Paid - Loan History</h4>
+    <table id="customers">
+    {% for loan in history %}
+        <tr>
+            <td><strong>Loan Amount:{{ loan.loan_amount }} </strong><br></td>
+            <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
+            <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {%elif client.is_loan_paid %}
 <h4>Loan History</h4>
 
       <table id="customers">

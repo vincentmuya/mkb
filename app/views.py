@@ -137,6 +137,9 @@ def client_detail(request, id, slug, ):
     history_ids = list(history.values_list('id_number', flat=True))
     clients_with_loan = list(all_clients.values_list('id_number', flat=True))
 
+    # Check if all loans are paid for the client's id_number
+    all_loans_paid = client.is_loan_paid and all(client.is_loan_paid for client in all_clients)
+
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
@@ -148,7 +151,7 @@ def client_detail(request, id, slug, ):
             return HttpResponseRedirect('/')
     else:
         feedback_form = FeedbackInquiryForm()
-    return render(request, 'client_detail.html', {'client': client, 'history':history, 'feedback_form': feedback_form, 'history_ids': history_ids, 'clients_with_loan': clients_with_loan})
+    return render(request, 'client_detail.html', {'client': client, 'history':history, 'feedback_form': feedback_form, 'history_ids': history_ids, 'clients_with_loan': clients_with_loan, 'all_loans_paid': all_loans_paid})
 
 def loan_paid(request,  id_number):
     client = get_list_or_404(Client, id_number=id_number)
