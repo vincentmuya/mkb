@@ -53,8 +53,15 @@
     {% for loan in history %}
         <tr>
             <td><strong>Loan Amount:{{ loan.loan_amount }} </strong><br></td>
+            <td><strong>Loan Interest:{{ loan.loan_interest }} </strong><br></td>
+        </tr>
+        <tr>
+            <td><strong>Loan Paid Amount:{{ loan.loan_balance }} </strong><br></td>
+            </tr>
+        <tr>
             <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
             <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
+
         </tr>
         {% endfor %}
     </table>

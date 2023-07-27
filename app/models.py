@@ -44,6 +44,9 @@ class LoanHistory(models.Model):
     date_paid = models.DateField(auto_now_add=True)
     loan_collection_date = models.DateField(null=True, blank=True)
     loan_amount = models.IntegerField(null=True, blank=True)
+    loan_interest = models.IntegerField(null=True, blank=True)
+    loan_balance = models.IntegerField(null=True, blank=True)
+
 
     def save(self, *args, **kwargs):
         # Copy loan_collection_date and loan_amount from the client when saving a new record in LoanHistory
@@ -55,6 +58,10 @@ class LoanHistory(models.Model):
             self.loan_collection_date = self.client.loan_collection_date
         if not self.loan_amount:
             self.loan_amount = self.client.loan_amount
+        if not self.loan_interest:
+            self.loan_interest = self.client.loan_interest
+        if not self.loan_balance:
+            self.loan_balance = self.client.loan_balance
         super(LoanHistory, self).save(*args, **kwargs)
 
     def __str__(self):
