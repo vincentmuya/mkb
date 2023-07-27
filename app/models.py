@@ -46,6 +46,8 @@ class LoanHistory(models.Model):
     loan_amount = models.IntegerField(null=True, blank=True)
     loan_interest = models.IntegerField(null=True, blank=True)
     loan_balance = models.IntegerField(null=True, blank=True)
+    loan_penalty = models.IntegerField(null=True, blank=True)
+
 
 
     def save(self, *args, **kwargs):
@@ -62,6 +64,8 @@ class LoanHistory(models.Model):
             self.loan_interest = self.client.loan_interest
         if not self.loan_balance:
             self.loan_balance = self.client.loan_balance
+        if not self.loan_penalty:
+            self.loan_penalty = self.client.loan_penalty
         super(LoanHistory, self).save(*args, **kwargs)
 
     def __str__(self):
