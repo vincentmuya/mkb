@@ -33,7 +33,7 @@ class Client(models.Model):
 
     @classmethod
     def search_by_id_number(cls, search_term):
-        search_result = cls.objects.filter(id_number__icontains=search_term)
+        search_result = cls.objects.filter(id_number__exact=search_term)
         return search_result
 
 

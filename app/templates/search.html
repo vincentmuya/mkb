@@ -23,9 +23,17 @@
     <h5 class="card-title">Name:<a href="{{ result.get_absolute_url }}">{{result.name}}</a></h5>
     <p class="card-text">ID Number:{{result.id_number}}</p>
       <p class="card-text">Loan Balance:KSH{{result.loan_balance}}/=</p>
-          <a href="{{ result.get_absolute_url }}" class="btn btn-primary">View {{result.name}}'s Loan</a>
-      <a href="{% url 'update-client' result.pk %}"><button type="button" class="btn btn-success" name="button">Update {{result.name}}'s Loan</button></a>
 
+
+      {%if result.is_loan_paid %}
+      <button type="button" class="btn btn-light" name="button">Paid</button>
+      <a href="{{ result.get_absolute_url }}"><button type="button" class="btn btn-primary" name="button"> Details</button></a>
+            {% else %}
+
+      <a href="{{ result.get_absolute_url }}"><button type="button" class="btn btn-info" name="button">Details</button></a>
+        <a href="{% url 'update-client' result.pk %}"><button type="button" class="btn btn-success" name="button">Update</button></a>
+        <a href="{% url 'loan_paid' result.id_number  %}"><button type="button" class="btn btn-danger" name="button">Paid</button></a>
+      {% endif %}
   </div>
      {% endfor %}
   <div class="card-footer text-muted">
