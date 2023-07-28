@@ -100,18 +100,23 @@
 
     <table id="customers">
         {% for loan in history %}
-    <tr>
-      <td><strong>Loan Amount:{{ loan.loan_amount }} </strong><br></td>
-        <td><strong>ID Number:{{ loan.id_number }} </strong><br></td>
-    </tr>
-    <tr>
-      <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
-      <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
-    </tr>
+                <tr>
+            <td><strong>Loan Amount:{{ loan.loan_amount }} </strong><br></td>
+            <td><strong>Loan Interest:{{ loan.loan_interest }} </strong><br></td>
+        </tr>
+        <tr>
+            <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
+            <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
+            </tr>
+        <tr>
+            <td><strong>Loan Penalty:{{ loan.loan_penalty }} </strong><br></td>
+            <td style="color:red;"><strong>Amount Paid:{{ loan.loan_balance }} </strong><br></td>
+        </tr>
         {% endfor %}
     </table>
+
     {% else%}
-      <table id="customers">
+    <table id="customers">
     <tr>
       <td><strong>Loan Amount:{{ client.loan_amount }} </strong><br></td>
       <td><strong>Loan Interest:{{ client.loan_interest }} </strong><br></td>
@@ -122,13 +127,11 @@
     </tr>
     <tr>
       <td><strong>Loan Balance:{{ client.loan_balance }} </strong></td>
-      <td>{{result.GoodsDescription}}</td>
     </tr>
     <tr>
       <td ><strong><a href="{% url 'update-client' client.pk %}"><button type="button" class="btn btn-success" name="button">Update{{ client.name }}'s Details </button></a></strong></td>
           <td><a href="{% url 'loan_paid' client.id_number  %}"><button type="button" class="btn btn-danger" name="button">Paid</button></a></td>
 
-      <td style="color:red;"></td>
     </tr>
     </table>
     {% endif %}
