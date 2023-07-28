@@ -22,49 +22,47 @@
     </div>
       {%endfor%}
 
-    <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">Name</th>
-      <th scope="col">ID Number</th>
-      <th scope="col">Loan Date</th>
-        <th scope="col">Loan Balance</th>
-        <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-   {%for post_item in lender_list%}
-    <tr>
-      <th scope="row"></th>
-      <td><a href="{{ post_item.get_absolute_url }}">{{post_item.name}}<a/></td>
-      <td>{{post_item.id_number}}</td>
-      <td>{{post_item.loan_collection_date}}</td>
-        <td>KSH{{post_item.loan_balance}}/=</td>
-        {%if post_item.is_loan_paid %}
-                <td><button type="button" class="btn btn-light" name="button">Paid</button></td>
+
+            <div class="row">
+    <div class="col-md-1">
+    </div>
+  <div class="col-md-11">
+  <table id="clients">
+  <tr>
+  <th>Name</th>
+  <th>Phone Number</th>
+  <th>ID Number</th>
+  <th>Residence</th>
+  <th>Loan Balance</th>
+  </tr>
+          <!-- Looping through lender_listlender_list   -->
+      {%for post_item in lender_list%}
+          <tr>
+            <td><a href="{{ post_item.get_absolute_url }}">{{post_item.name}}<a/></td>
+            <td>{{post_item.phone_number}}</td>
+            <td>{{post_item.id_number}}</td>
+            <td>{{post_item.Residence}}</td>
+            <td>KSH{{post_item.loan_balance}}</td>
+            {%if post_item.is_loan_paid %}
+        <td><button type="button" class="btn btn-light" name="button">Paid</button></td>
         <td><a href="{{ post_item.get_absolute_url }}"><button type="button" class="btn btn-primary" name="button"> Details</button></a></td>
-    {% else %}
+      {% else %}
         <td><a href="{{ post_item.get_absolute_url }}"><button type="button" class="btn btn-info" name="button">Details</button></a></td>
         <td><a href="{% url 'update-client' post_item.pk %}"><button type="button" class="btn btn-success" name="button">Update</button></a></td>
         <td><a href="{% url 'loan_paid' post_item.id_number  %}"><button type="button" class="btn btn-danger" name="button">Paid</button></a></td>
         {% endif %}
-    </tr>
-
-     {%endfor%}
-
-  </tbody>
-          <thead class="thead-dark">
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">Total</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-        <th scope="col">{{total}}</th>
-        <th scope="col"></th>
-    </tr>
-  </thead>
-</table>
+          </tr>
+    {%endfor%}
+        <tr>
+  <th>Total Unpaid</th>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th>KSH{{ total_unpaid_balance }}</th>
+  </tr>
+        </table>
+        </div>
+        </div>
 </div>
 </div>
 

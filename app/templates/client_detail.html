@@ -68,14 +68,21 @@
     {%elif client.is_loan_paid %}
 <h4>Loan History</h4>
 
-      <table id="customers">
-    <tr>
-      <td><strong>Loan Amount:{{ client.loan_amount }} </strong><br></td>
-    </tr>
-    <tr>
-      <td><strong>Loan Collection Date:{{ client.loan_collection_date }} </strong><br></td>
-      <td><strong>Loan Date Paid:{{ client.date_paid }} </strong><br></td>
-    </tr>
+    <table id="customers">
+        {% for loan in history %}
+                <tr>
+            <td><strong>Loan Amount:{{ loan.loan_amount }} </strong><br></td>
+            <td><strong>Loan Interest:{{ loan.loan_interest }} </strong><br></td>
+        </tr>
+        <tr>
+            <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
+            <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
+            </tr>
+        <tr>
+            <td><strong>Loan Penalty:{{ loan.loan_penalty }} </strong><br></td>
+            <td style="color:red;"><strong>Amount Paid:{{ loan.loan_balance }} </strong><br></td>
+        </tr>
+        {% endfor %}
     </table>
     {% elif client.id_number in history_ids or client.id_number in clients_with_loan and client.is_loan_paid %}
     <table id="customers">

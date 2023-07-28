@@ -88,7 +88,7 @@ def update_loan_balance(request, client_id):
 @login_required(login_url='/accounts/login')
 def client_list(request):
     client = Client.objects.filter(is_loan_paid=False)[::-1]
-    total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
+    total = sum(client_obj.loan_balance for client_obj in client)
     # Loop through each client and update their loan balance using the update_loan_balance function
     for clients in client:
         update_loan_balance(request, clients.id)
@@ -211,7 +211,8 @@ def logout_request(request):
 def profile(request, username):
     user_profile = Profile.objects.filter(user_id=request.user.id)[::-1]
     lender_list = Client.objects.filter(lender_id=request.user).order_by('loan_collection_date')[::-1]
-    total = Client.objects.aggregate(s=Sum("loan_balance"))["s"]
+    unpaid_clients = Client.objects.filter(lender_id=request.user, is_loan_paid=False)
+    total_unpaid_balance = sum(client.loan_balance for client in unpaid_clients)
     client = Client.objects.all()
     # Loop through each client and update their loan balance using the update_loan_balance function
     for clients in lender_list:
@@ -228,7 +229,7 @@ def profile(request, username):
     else:
         feedback_form = FeedbackInquiryForm()
 
-    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list, "total":total, 'feedback_form': feedback_form})
+    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list, "total_unpaid_balance":total_unpaid_balance, 'feedback_form': feedback_form})
 
 def search_results(request):
     if 'name' in request.GET and request.GET["name"]:
