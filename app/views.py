@@ -14,6 +14,13 @@ from datetime import date, timedelta, datetime
 
 
 def index(request):
+    loans_by_user = Client.objects.filter(lender_id=request.user)
+    total_by_user = sum(client.loan_balance for client in loans_by_user)
+    unpaid_clients = Client.objects.filter(lender_id=request.user, is_loan_paid=False)
+    total_unpaid_balance = sum(client.loan_balance for client in unpaid_clients)
+    loans_number_by_user = Client.objects.filter(lender_id=request.user).count
+    unpaid_loans_by_user = Client.objects.filter(lender_id=request.user, is_loan_paid=False).count
+    paid_loans_by_user = Client.objects.filter(lender_id=request.user, is_loan_paid=True).count
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
@@ -26,7 +33,7 @@ def index(request):
     else:
         feedback_form = FeedbackInquiryForm()
 
-    return render(request, "index.html",{'feedback_form': feedback_form})
+    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':total_unpaid_balance, 'total_by_user':total_by_user, 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user})
 
 def calculate_loan_penalty(loan_amount, loan_interest):
     # Implement your logic to calculate the loan balance based on the loan amount, interest, and penalty
