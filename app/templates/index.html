@@ -11,43 +11,53 @@
 <body>
 <div class="container">
 <h1>Welcome {{user.username}}</h1>
+  <div class="underline-title"></div>
+  <div class="space"></div>
+
 <!--Cards-->
 <div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Loan Amount By {{user.username}}</h5>
+        <h4 class="card-title">Loans By {{user.username}}</h4>
         <p class="card-text">KSH{{total_by_user}}/=.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="{%url 'profile' user.username%}" class="btn btn-primary">View Loans</a>
       </div>
     </div>
   </div>
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Loans Unpaid Balance</h5>
+        <h4 class="card-title">Loans Unpaid Balance</h4>
         <p class="card-text">KSH{{ total_unpaid_balance }}/=.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="{%url 'client_list' %}" class="btn btn-primary">View Clients</a>
       </div>
     </div>
   </div>
+<div class="space"></div>
 </div><div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Loans Status</h5>
+        <h4 class="card-title">Loans Status</h4>
         <p class="card-text">Loans Given:{{loans_number_by_user}}.</p>
         <p class="card-text">Loans paid:{{paid_loans_by_user}}.</p>
-        <p class="card-text">Loans Unpaid:{{unpaid_loans_by_user}}.</p>        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <p class="card-text">Loans Unpaid:{{unpaid_loans_by_user}}.</p>
+        <a href="{%url 'profile' user.username%}" class="btn btn-primary">View</a>
       </div>
     </div>
   </div>
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <h4 class="card-title">Search Client Using ID Number</h4>
+    <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'search_results' %}">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" class="form-control" name="name" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+        <hr>
+      <a href="{%url 'new_client'%}" class="btn btn-info">Add New Client</a>
+        <a href="{%url 'new_client'%}" class="btn btn-warning">Add New User</a>
       </div>
     </div>
   </div>
@@ -122,5 +132,23 @@
 body{
   margin-top:90px;
   }
+.space{
+padding:10px;
+}
+.card{
+border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px 8px 10px #888888;
+}
+.underline-title {
+  background: -webkit-linear-gradient(right, #a6f77b, #2ec06f);
+  height: 2px;
+  margin: -1.1rem auto 0 auto;
+  width: 400px;
+
+}
+h1{
+text-align:center;
+}
 </style>
 {%endblock%}
