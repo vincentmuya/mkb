@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from .forms import NewClientForm, FeedbackInquiryForm
+from .forms import NewClientForm, FeedbackInquiryForm, NewUserForm
 from django.http import HttpResponseRedirect
 from .models import Client, Profile, LoanHistory
 from django.db.models import Sum
@@ -12,7 +12,7 @@ from datetime import date, timedelta, datetime
 
 # Create your views here.
 
-
+@login_required(login_url='/accounts/login')
 def index(request):
     loans_by_user = Client.objects.filter(lender_id=request.user)
     total_by_user = sum(client.loan_balance for client in loans_by_user)
@@ -214,6 +214,17 @@ def logout_request(request):
     return redirect("/")
 
 
+def register_request(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful." )
+            return redirect("/home")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = NewUserForm()
+    return render(request, 'registration/register.html', {'form': form})
 @login_required(login_url='/accounts/login')
 def profile(request, username):
     user_profile = Profile.objects.filter(user_id=request.user.id)[::-1]
