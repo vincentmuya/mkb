@@ -28,6 +28,7 @@
   <th>Phone Number</th>
   <th>ID Number</th>
   <th>Residence</th>
+  <th>Lender</th>
   <th>Loan Balance</th>
   </tr>
           <!-- Looping through client   -->
@@ -37,6 +38,7 @@
             <td>{{single_client.phone_number}}</td>
             <td>{{single_client.id_number}}</td>
             <td>{{single_client.Residence}}</td>
+            <td>{{single_client.lender.username}}</td>
             <td>{{single_client.loan_balance}}</td>
             <td><a href="{{ single_client.get_absolute_url }}"><button type="button" class="btn btn-info" name="button">Details</button></a></td>
             <td><a href="{% url 'update-client' single_client.pk %}"><button type="button" class="btn btn-success" name="button">Update</button></a></td>
