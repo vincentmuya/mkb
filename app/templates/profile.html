@@ -42,7 +42,7 @@
             <td>{{post_item.phone_number}}</td>
             <td>{{post_item.id_number}}</td>
             <td>{{post_item.Residence}}</td>
-            <td>KSH{{post_item.loan_balance}}</td>
+            <td>KSH{{post_item.loan_balance}}/=</td>
             {%if post_item.is_loan_paid %}
         <td><button type="button" class="btn btn-light" name="button">Paid</button></td>
         <td><a href="{{ post_item.get_absolute_url }}"><button type="button" class="btn btn-primary" name="button"> Details</button></a></td>
@@ -58,7 +58,7 @@
   <th></th>
   <th></th>
   <th></th>
-  <th>KSH{{ total_unpaid_balance }}</th>
+  <th>KSH{{ total_unpaid_balance }}/=</th>
   </tr>
         </table>
         </div>

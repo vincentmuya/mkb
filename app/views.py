@@ -9,6 +9,8 @@ from .models import Client, Profile, LoanHistory
 from django.db.models import Sum
 from datetime import date, timedelta, datetime
 from datetime import datetime
+from django.contrib.humanize.templatetags.humanize import intcomma
+
 
 # Create your views here.
 
@@ -34,7 +36,7 @@ def index(request):
     else:
         feedback_form = FeedbackInquiryForm()
 
-    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':total_unpaid_balance, 'total_by_user':total_by_user, 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user, 'total_loan_amount':total_loan_amount})
+    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':intcomma(total_unpaid_balance), 'total_by_user':intcomma(total_by_user), 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user, 'total_loan_amount':intcomma(total_loan_amount)})
 
 def calculate_loan_penalty(loan_amount, loan_interest):
     # Implement your logic to calculate the loan balance based on the loan amount, interest, and penalty
@@ -100,6 +102,10 @@ def client_list(request):
     # Loop through each client and update their loan balance using the update_loan_balance function
     for clients in client:
         update_loan_balance(request, clients.id)
+    # Format the loan_balance and loan_amount fields with commas
+    for clients in client:
+        clients.loan_balance = intcomma(clients.loan_balance)
+        clients.loan_amount = intcomma(clients.loan_amount)
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
@@ -112,7 +118,7 @@ def client_list(request):
     else:
         feedback_form = FeedbackInquiryForm()
 
-    return render(request, 'client.html', {"client": client, "total":total, 'feedback_form': feedback_form})
+    return render(request, 'client.html', {"client": client, "total":intcomma(total), 'feedback_form': feedback_form})
 
 
 @login_required(login_url='/accounts/login')
@@ -147,6 +153,16 @@ def client_detail(request, id, slug, ):
 
     # Check if all loans are paid for the client's id_number
     all_loans_paid = client.is_loan_paid and all(client.is_loan_paid for client in all_clients)
+    # Format the loan_balance and loan_amount fields with commas
+    for client in all_clients:
+        client.loan_balance = intcomma(client.loan_balance)
+        client.loan_amount = intcomma(client.loan_amount)
+        client.loan_penalty = intcomma(client.loan_penalty)
+
+    for clients in history:
+        clients.loan_balance = intcomma(clients.loan_balance)
+        clients.loan_amount = intcomma(clients.loan_amount)
+        clients.loan_penalty = intcomma(clients.loan_penalty)
 
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
@@ -253,6 +269,10 @@ def profile(request, username):
     # Loop through each client and update their loan balance using the update_loan_balance function
     for clients in lender_list:
         update_loan_balance(request, clients.id)
+    # Format the loan_balance and loan_amount fields with commas
+    for client in lender_list:
+        client.loan_balance = intcomma(client.loan_balance)
+        client.loan_amount = intcomma(client.loan_amount)
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
@@ -265,13 +285,17 @@ def profile(request, username):
     else:
         feedback_form = FeedbackInquiryForm()
 
-    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list, "total_unpaid_balance":total_unpaid_balance, 'feedback_form': feedback_form})
+    return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list, "total_unpaid_balance":intcomma(total_unpaid_balance), 'feedback_form': feedback_form})
 
 def search_results(request):
     if 'name' in request.GET and request.GET["name"]:
         search_term = request.GET.get("name")
         searched_ref = Client.search_by_id_number(search_term)
         message = f"{search_term}"
+    # Format the loan_balance and loan_amount fields with commas
+    for client in searched_ref:
+        client.loan_balance = intcomma(client.loan_balance)
+        client.loan_amount = intcomma(client.loan_amount)
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
