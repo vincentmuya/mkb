@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from .models import Client, Profile, LoanHistory
 from django.db.models import Sum
 from datetime import date, timedelta, datetime
-
+from datetime import datetime
 
 # Create your views here.
 
@@ -21,6 +21,7 @@ def index(request):
     loans_number_by_user = Client.objects.filter(lender_id=request.user).count
     unpaid_loans_by_user = Client.objects.filter(lender_id=request.user, is_loan_paid=False).count
     paid_loans_by_user = Client.objects.filter(lender_id=request.user, is_loan_paid=True).count
+    total_loan_amount = current_month_loans_amount(request)
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
@@ -33,7 +34,7 @@ def index(request):
     else:
         feedback_form = FeedbackInquiryForm()
 
-    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':total_unpaid_balance, 'total_by_user':total_by_user, 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user})
+    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':total_unpaid_balance, 'total_by_user':total_by_user, 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user, 'total_loan_amount':total_loan_amount})
 
 def calculate_loan_penalty(loan_amount, loan_interest):
     # Implement your logic to calculate the loan balance based on the loan amount, interest, and penalty
@@ -177,6 +178,23 @@ def loan_paid(request,  id_number):
     LoanHistory.objects.create(client=client)
 
     return HttpResponse("Loan Paid Successfully!")
+
+
+def current_month_loans_amount(request):
+    # Get the current date
+    today = datetime.now()
+
+    # Filter loans for the current month
+    loans_this_month = Client.objects.filter(loan_collection_date__month=today.month, loan_collection_date__year=today.year)
+
+    # Calculate the sum of loan amounts
+    total_loan_amount_monthly = loans_this_month.aggregate(Sum('loan_balance'))['loan_balance__sum']
+
+    if total_loan_amount_monthly is None:
+        total_loan_amount_monthly = 0
+
+    return total_loan_amount_monthly
+
 
 def login_request(request):
     if request.method == "POST":

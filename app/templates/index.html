@@ -21,6 +21,7 @@
       <div class="card-body">
         <h4 class="card-title">Loans By {{user.username}}</h4>
         <p class="card-text">KSH{{total_by_user}}/=.</p>
+        <p class="card-text">Loans Given This MonthKSH:{{total_loan_amount}}/=</p>
         <a href="{%url 'profile' user.username%}" class="btn btn-primary">View Loans</a>
       </div>
     </div>
