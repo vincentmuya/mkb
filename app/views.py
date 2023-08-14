@@ -19,6 +19,9 @@ def index(request):
     loans_by_user = Client.objects.filter(lender_id=request.user)
     total_by_user = sum(client.loan_balance for client in loans_by_user)
     unpaid_clients = Client.objects.filter(lender_id=request.user, is_loan_paid=False)
+    paid_clients = Client.objects.filter(lender_id=request.user, is_loan_paid=True)
+    total_paid_balance = sum(client.loan_balance for client in paid_clients)
+    profit_by_user = sum(client.loan_penalty for client in paid_clients)
     total_unpaid_balance = sum(client.loan_balance for client in unpaid_clients)
     loans_number_by_user = Client.objects.filter(lender_id=request.user).count
     unpaid_loans_by_user = Client.objects.filter(lender_id=request.user, is_loan_paid=False).count
@@ -36,7 +39,7 @@ def index(request):
     else:
         feedback_form = FeedbackInquiryForm()
 
-    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':intcomma(total_unpaid_balance), 'total_by_user':intcomma(total_by_user), 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user, 'total_loan_amount':intcomma(total_loan_amount)})
+    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':intcomma(total_unpaid_balance), 'total_by_user':intcomma(total_by_user), 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user, 'total_loan_amount':intcomma(total_loan_amount), 'total_paid_balance':intcomma(total_paid_balance), 'profit_by_user':intcomma(profit_by_user)})
 
 def calculate_loan_penalty(loan_amount, loan_interest):
     # Implement your logic to calculate the loan balance based on the loan amount, interest, and penalty
