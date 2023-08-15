@@ -310,9 +310,16 @@ def registered_users(request):
             'total_paid_loans': intcomma(paid_loans),
             'total_unpaid_loans': intcomma(unpaid_loans),
             'profit_by_user':intcomma(profit_by_user),
+            'user_id': user.id,  # Add the user's ID to the dictionary
         }
         user_stats.append(user_stat)
     return render(request, "users.html", {"users_in_db": users_in_db, 'user_stats':user_stats})
+
+
+def user_detail(request, id):
+    user_info = get_object_or_404(User, id=id)
+
+    return render(request, 'user_detail.html', {'user_info':user_info})
 
 def search_results(request):
     if 'name' in request.GET and request.GET["name"]:

@@ -31,19 +31,19 @@
   <th>Profit From Loans</th>
   </tr>
           <!-- Looping through Users   -->
-          {%  for stats in user_stats %}
-          <tr>
-            <td><a href="{{ stats.get_absolute_url }}">{{stats.user}}</a></td>
-            <td>KSH{{stats.total_loans_given}}/=</td>
-            <td>KSH{{stats.total_paid_loans}}/=</td>
-            <td>KSH{{stats.total_unpaid_loans}}/=</td>
-            <td>KSH{{stats.profit_by_user}}/=</td>
-            <td><a href="{{ users.get_absolute_url }}"><button type="button" class="btn btn-info" name="button">Details</button></a></td>
-
-
-          </tr>
-
-          {%endfor%}
+{% for stats in user_stats %}
+<tr>
+    <td><a href="{% url 'user_detail' id=stats.user_id %}">{{ stats.user }}</a></td>
+    <td>KSH{{ stats.total_loans_given }}/=</td>
+    <td>KSH{{ stats.total_paid_loans }}/=</td>
+    <td>KSH{{ stats.total_unpaid_loans }}/=</td>
+    <td>KSH{{ stats.profit_by_user }}/=</td>
+    <td><a href="{% url 'user_detail' id=stats.user_id %}">
+        <button type="button" class="btn btn-info" name="button">Details</button>
+        </a>
+    </td>
+</tr>
+{% endfor %}
         <tr>
   <th></th>
   <th></th>

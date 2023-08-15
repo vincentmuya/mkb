@@ -11,9 +11,9 @@ urlpatterns = [
     url("new/client", views.new_client, name="new_client"),
     url("client_list", views.client_list, name="client_list"),
     url(r'^update/client/(?P<pk>\d+)/$', views.update_client, name='update-client'),
-    url(r'^(?P<id>\d+)/(?P<slug>[-\w]+)/$', views.client_detail, name='client_detail'),
     url(r'^profile/(?P<username>[\w\-]+)/$', views.profile, name='profile'),
     url("users", views.registered_users, name="registered_users"),
+    url(r'^user/(?P<id>\d+)/$', views.user_detail, name='user_detail'),
     url(r'^search$', views.search_results, name='search_results'),
     url('loan_paid/(?P<id_number>\d+)/$', views.loan_paid, name='loan_paid'),
 
