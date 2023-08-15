@@ -66,6 +66,7 @@
       <a href="{%url 'new_client'%}" class="btn btn-info">Add New Client</a>
         {% if user.is_authenticated and user.is_superuser %}
         <a href="{%url 'register'%}" class="btn btn-warning">Add New User</a>
+        <a href="{%url 'registered_users'%}" class="btn btn-danger">View Use Activities</a>
         {% endif %}
       </div>
     </div>

@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import NewClientForm, FeedbackInquiryForm, NewUserForm
 from django.http import HttpResponseRedirect
-from .models import Client, Profile, LoanHistory
+from .models import Client, Profile, LoanHistory, User
 from django.db.models import Sum
 from datetime import date, timedelta, datetime
 from datetime import datetime
@@ -289,6 +289,30 @@ def profile(request, username):
         feedback_form = FeedbackInquiryForm()
 
     return render(request, "profile.html", {"user_profile": user_profile, "lender_list":lender_list, "total_unpaid_balance":intcomma(total_unpaid_balance), 'feedback_form': feedback_form})
+
+def registered_users(request):
+    users_in_db = User.objects.all()
+
+    user_stats = []
+
+    for user in users_in_db:
+        loans_given = Client.objects.filter(lender=user)
+        total_loans_given = sum(client.loan_balance for client in loans_given)
+        paid_loans = loans_given.filter(is_loan_paid=True)
+        profit_by_user = sum(client.loan_penalty for client in paid_loans)
+        paid_loans = sum(client.loan_balance for client in paid_loans)
+        unpaid_loans = loans_given.filter(is_loan_paid=False)
+        unpaid_loans = sum(client.loan_balance for client in unpaid_loans)
+
+        user_stat = {
+            'user': user,
+            'total_loans_given': intcomma(total_loans_given),
+            'total_paid_loans': intcomma(paid_loans),
+            'total_unpaid_loans': intcomma(unpaid_loans),
+            'profit_by_user':intcomma(profit_by_user),
+        }
+        user_stats.append(user_stat)
+    return render(request, "users.html", {"users_in_db": users_in_db, 'user_stats':user_stats})
 
 def search_results(request):
     if 'name' in request.GET and request.GET["name"]:
