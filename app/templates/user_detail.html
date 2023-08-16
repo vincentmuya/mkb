@@ -1,0 +1,165 @@
+{%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}}
+<!DOCTYPE html>
+<html lang="en">
+<title>MKB Mic Bank</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/user_detail.css' %}">
+</head>
+<body>
+
+    <div class="container">
+          <div id="card-title">
+          <h2>User Details</h2>
+            <div class="underline-title"></div>
+      </div>
+              <div class="row">
+        <div class="col-md-1">
+    <h1></h1>
+        </div>
+        <div class="col-md-10">
+    <div class="panel panel-default">
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+      <div class="titlebold"><strong></strong>
+      <br>
+  <div class="track-card" >
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="credentials">
+        <h3 class="titlebold"><strong>Name:{{ user.user }}</strong> </h3>
+        <h3 class="titlebold"><strong>ID Number:{{ client.id_number }} </strong></h3>
+
+
+      </div>
+      </div>
+
+    <div class="col-md-6">
+      <div class="credentials">
+        <h3 class="titlebold"><strong>Phone Number:{{ client.phone_number }} </strong></h3>
+        <h3 class="titlebold"><strong>Residence:{{ client.Residence }} </strong></h3>
+      </div>
+    </div>
+    </div>
+    <br>
+  {% if all_loans_paid %}
+    <h4>All Loans Paid - Loan History</h4>
+    <table id="customers">
+    {% for loan in history %}
+        <tr>
+            <td><strong>Loan Amount:KSH{{ loan.loan_amount }}/= </strong><br></td>
+            <td><strong>Loan Interest:{{ loan.loan_interest }}% </strong><br></td>
+        </tr>
+        <tr>
+            <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
+            <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
+            </tr>
+        <tr>
+            <td><strong>Loan Penalty:KSH{{ loan.loan_penalty }}/= </strong><br></td>
+            <td style="color:red;"><strong>Amount Paid:KSH{{ loan.loan_balance }}/= </strong><br></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {%elif client.is_loan_paid %}
+<h4>Loan History</h4>
+
+    <table id="customers">
+        {% for loan in history %}
+                <tr>
+            <td><strong>Loan Amount:KSH{{ loan.loan_amount }}/= </strong><br></td>
+            <td><strong>Loan Interest:{{ loan.loan_interest }}% </strong><br></td>
+        </tr>
+        <tr>
+            <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
+            <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
+            </tr>
+        <tr>
+            <td><strong>Loan Penalty:KSH{{ loan.loan_penalty }}/= </strong><br></td>
+            <td style="color:red;"><strong>Amount Paid:KSH{{ loan.loan_balance }}/= </strong><br></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% elif client.id_number in history_ids or client.id_number in clients_with_loan and client.is_loan_paid %}
+    <table id="customers">
+    <tr>
+      <td><strong>Loan Amount:KSH{{ client.loan_amount }}/= </strong><br></td>
+      <td><strong>Loan Interest:{{ client.loan_interest }}% </strong><br></td>
+    </tr>
+    <tr>
+      <td><strong>Loan Collection Date:{{ client.loan_collection_date }} </strong><br></td>
+      <td><strong>Loan Penalty:KSH{{ client.loan_penalty }}/= </strong><br></td>
+    </tr>
+    <tr>
+      <td><strong>Loan Balance:KSH{{ client.loan_balance }}/= </strong></td>
+    </tr>
+    <tr>
+      <td ><strong><a href="{% url 'update-client' client.pk %}"><button type="button" class="btn btn-success" name="button">Update{{ client.name }}'s Details </button></a></strong></td>
+          <td><a href="{% url 'loan_paid' client.id_number  %}"><button type="button" class="btn btn-danger" name="button">Paid</button></a></td>
+
+    </tr>
+    </table>
+      <h4>Loan History</h4>
+
+    <table id="customers">
+        {% for loan in history %}
+                <tr>
+            <td><strong>Loan Amount:KSH{{ loan.loan_amount }}/= </strong><br></td>
+            <td><strong>Loan Interest:{{ loan.loan_interest }}% </strong><br></td>
+        </tr>
+        <tr>
+            <td><strong>Loan Collection Date:{{ loan.loan_collection_date }} </strong><br></td>
+            <td><strong>Loan Date Paid:{{ loan.date_paid }} </strong><br></td>
+            </tr>
+        <tr>
+            <td><strong>Loan Penalty:KSH{{ loan.loan_penalty }}/= </strong><br></td>
+            <td style="color:red;"><strong>Amount Paid:KSH{{ loan.loan_balance }}/= </strong><br></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% else%}
+    <table id="customers">
+    <tr>
+      <td><strong>Loan Amount:KSH{{ client.loan_amount }}/= </strong><br></td>
+      <td><strong>Loan Interest:{{ client.loan_interest }}% </strong><br></td>
+    </tr>
+    <tr>
+      <td><strong>Loan Collection Date:{{ client.loan_collection_date }} </strong><br></td>
+      <td><strong>Loan Penalty:KSH{{ client.loan_penalty }}/= </strong><br></td>
+    </tr>
+    <tr>
+      <td><strong>Loan Balance:KSH{{ client.loan_balance }}/= </strong></td>
+    </tr>
+    <tr>
+      <td ><strong><a href=""><button type="button" class="btn btn-success" name="button">Update{{ client.name }}'s Details </button></a></strong></td>
+          <td><a href=""><button type="button" class="btn btn-danger" name="button">Paid</button></a></td>
+
+    </tr>
+    </table>
+    {% endif %}
+    <br>
+  </div>
+</div>
+  <div class="col-md-1">
+  </div>
+</div>
+  </div>
+
+  </div>
+  <div class="col-md-1">
+  <h1></h1>
+  </div>
+  </div>
+
+
+    </div>
+    </div>
+
+</body>
+</html>
+{%endblock%}
