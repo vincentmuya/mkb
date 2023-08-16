@@ -10,6 +10,8 @@ from django.db.models import Sum
 from datetime import date, timedelta, datetime
 from datetime import datetime
 from django.contrib.humanize.templatetags.humanize import intcomma
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
 
 
 # Create your views here.
@@ -319,7 +321,33 @@ def registered_users(request):
 def user_detail(request, id):
     user_info = get_object_or_404(User, id=id)
 
-    return render(request, 'user_detail.html', {'user_info':user_info})
+    loans_given = Client.objects.filter(lender=user_info)
+    total_loans_given = sum(client.loan_balance for client in loans_given)
+    total_paid_loans = loans_given.filter(is_loan_paid=True)
+    total_paid_amount = sum(client.loan_balance for client in total_paid_loans)
+    total_unpaid_loans = loans_given.filter(is_loan_paid=False)
+    total_unpaid_amount = sum(client.loan_balance for client in total_unpaid_loans)
+
+    # Annotate loans with year and month information
+    loans_given = loans_given.annotate(
+        year_month=TruncMonth('loan_collection_date')
+    )
+
+    # Calculate the count of loans given per month
+    loans_given_monthly = loans_given.values('year_month').annotate(count=Count('id'))
+
+    # You can calculate other variables from the Client model here
+    # For example, you might want to calculate the total profit for the user
+
+    context = {
+        'user_info': user_info,
+        'total_loans_given': intcomma(total_loans_given),
+        'total_paid_amount': intcomma(total_paid_amount),
+        'total_unpaid_amount': intcomma(total_unpaid_amount),
+        'loans_given_monthly': loans_given_monthly,
+        # Add other variables you want to display in the template
+    }
+    return render(request, 'user_detail.html', context)
 
 def search_results(request):
     if 'name' in request.GET and request.GET["name"]:
