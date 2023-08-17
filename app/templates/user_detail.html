@@ -1,4 +1,4 @@
-{%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}}
+{%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}} {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <title>MKB Mic Bank</title>
@@ -46,11 +46,11 @@
     </div>
     </div>
     <br>
-    <h4>All Loans Paid - Loan History</h4>
+    <h4>Loan History Monthly</h4>
     <table id="customers">
-        {% for entry in loans_given_monthly %}
+    {% for entry in loans_given_monthly %}
         <tr>
-            <td><strong>Loan Monthly:{{ entry.year_month|date:"F Y" }}: {{ entry.count }}= </strong><br></td>
+            <td><strong>Month:{{ entry.year_month|date:"F Y" }}: Number: {{ entry.count }}| Amount: KSH{{ entry.amount|intcomma }}/=|Unpaid: KSH{{ entry.unpaid|intcomma }}/= </strong><br></td>
         </tr>
         {% endfor %}
     </table>

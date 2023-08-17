@@ -11,7 +11,7 @@ from datetime import date, timedelta, datetime
 from datetime import datetime
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.db.models.functions import TruncMonth
-from django.db.models import Count
+from django.db.models import Count, Sum, F
 
 
 # Create your views here.
@@ -334,10 +334,8 @@ def user_detail(request, id):
     )
 
     # Calculate the count of loans given per month
-    loans_given_monthly = loans_given.values('year_month').annotate(count=Count('id'))
-
+    loans_given_monthly = loans_given.values('year_month').annotate(count=Count('id'),amount=Sum('loan_balance'), unpaid=Sum('loan_balance', filter=F('is_loan_paid') == False))
     # You can calculate other variables from the Client model here
-    # For example, you might want to calculate the total profit for the user
 
     context = {
         'user_info': user_info,
