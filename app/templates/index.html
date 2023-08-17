@@ -1,4 +1,4 @@
-{%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}}
+{%extends 'base.html'%} {% load static %} {%block content%} {% load bootstrap4 %} {{ block.super}} {% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <title>MKB Mic Bank</title>
@@ -42,7 +42,8 @@
     </div>
   </div>
 <div class="space"></div>
-</div><div class="row">
+</div>
+  <div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
@@ -63,15 +64,36 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
         <hr>
-      <a href="{%url 'new_client'%}" class="btn btn-info">Add New Client</a>
+      <a href="{%url 'new_client'%}" class="btn btn-info">Add Client</a>
         {% if user.is_authenticated and user.is_superuser %}
-        <a href="{%url 'register'%}" class="btn btn-warning">Add New User</a>
+        <a href="{%url 'register'%}" class="btn btn-warning">Add User</a>
         <a href="{%url 'registered_users'%}" class="btn btn-danger">View Users</a>
         {% endif %}
       </div>
     </div>
   </div>
 </div>
+  <div class="space"></div>
+          {% if user.is_authenticated and user.is_superuser %}
+
+        <h4 class="card-title" style="text-align:center;">Monthly Record.</h4>
+
+    <div class="row">
+      {% for loan in total_loan_amount_users.monthly_loan_balance %}
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ loan.year_month|date:"F" }}.</h4>
+        <p class="card-text">Loans given: KSH{{ loan.total_balance|intcomma }}/=.</p>
+        <p class="card-text">Paid Loans: KSH{{ total_loan_amount_users.paid_loans_amount|intcomma }}/=.</p>
+        <p class="card-text">Unpaid Loan Balance: KSH{{ total_loan_amount_users.unpaid_loan_balance|intcomma }}/=.</p>
+        <p class="card-text">Total Profit: KSH{{ total_loan_amount_users.total_profit|intcomma }}/=.</p>
+      </div>
+    </div>
+  </div>
+              {% endfor %}
+</div>
+{% endif %}
 </div>
 <!--End Of Cards-->
 <!--<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">-->

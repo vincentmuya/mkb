@@ -29,6 +29,8 @@ def index(request):
     unpaid_loans_by_user = Client.objects.filter(lender_id=request.user, is_loan_paid=False).count
     paid_loans_by_user = Client.objects.filter(lender_id=request.user, is_loan_paid=True).count
     total_loan_amount = current_month_loans_amount(request)
+    total_loan_amount_users = monthly_loan_stats(request)
+
     if request.method == 'POST':
         feedback_form = FeedbackInquiryForm(request.POST)
         if feedback_form.is_valid():
@@ -41,7 +43,7 @@ def index(request):
     else:
         feedback_form = FeedbackInquiryForm()
 
-    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':intcomma(total_unpaid_balance), 'total_by_user':intcomma(total_by_user), 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user, 'total_loan_amount':intcomma(total_loan_amount), 'total_paid_balance':intcomma(total_paid_balance), 'profit_by_user':intcomma(profit_by_user)})
+    return render(request, "index.html",{'feedback_form': feedback_form, 'total_unpaid_balance':intcomma(total_unpaid_balance), 'total_by_user':intcomma(total_by_user), 'unpaid_loans_by_user':unpaid_loans_by_user, 'paid_loans_by_user':paid_loans_by_user, 'loans_number_by_user':loans_number_by_user, 'total_loan_amount':intcomma(total_loan_amount), 'total_paid_balance':intcomma(total_paid_balance), 'profit_by_user':intcomma(profit_by_user), 'total_loan_amount_users':total_loan_amount_users})
 
 def calculate_loan_penalty(loan_amount, loan_interest):
     # Implement your logic to calculate the loan balance based on the loan amount, interest, and penalty
@@ -347,6 +349,36 @@ def user_detail(request, id):
     }
     return render(request, 'user_detail.html', context)
 
+def monthly_loan_stats(request):
+    # Calculate total loan balance given monthly
+    monthly_loan_balance = Client.objects.annotate(
+        year_month=TruncMonth('loan_collection_date')
+    ).values('year_month').annotate(
+        total_balance=Sum('loan_balance')
+    )
+
+    # Calculate paid loans amount
+    paid_loans_amount = Client.objects.filter(is_loan_paid=True).aggregate(
+        total_paid=Sum('loan_balance')
+    )['total_paid']
+
+    # Calculate profit made by loans
+    total_profit = Client.objects.filter(is_loan_paid=True).aggregate(
+        total_profit=Sum('loan_penalty')
+    )['total_profit']
+
+    # Calculate unpaid loan balance
+    unpaid_loan_balance = Client.objects.filter(is_loan_paid=False).aggregate(
+        total_unpaid_balance=Sum('loan_balance')
+    )['total_unpaid_balance']
+
+    context = {
+        'monthly_loan_balance': monthly_loan_balance,
+        'paid_loans_amount': paid_loans_amount,
+        'total_profit': total_profit,
+        'unpaid_loan_balance': unpaid_loan_balance,
+    }
+    return context
 def search_results(request):
     if 'name' in request.GET and request.GET["name"]:
         search_term = request.GET.get("name")
